@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PDFDocument, rgb } from 'pdf-lib';
+	import { PDFDocument } from 'pdf-lib';
 	import { onMount } from 'svelte';
 	import * as pdfjsLib from 'pdfjs-dist';
 
@@ -12,13 +12,13 @@
 	let canvas: HTMLCanvasElement;
 	let ctx: CanvasRenderingContext2D | null = null;
 
-	// Signature placement state
+	// Signature placement state (stored as percentages for responsive positioning)
 	let signatures: Array<{
 		image: string;
-		x: number;
-		y: number;
-		width: number;
-		height: number;
+		xPercent: number;
+		yPercent: number;
+		widthPercent: number;
+		heightPercent: number;
 		page: number;
 	}> = $state([]);
 
@@ -27,6 +27,51 @@
 	let dragIndex = $state(-1);
 	let dragStart = $state({ x: 0, y: 0 });
 	let resizeStart = $state({ x: 0, y: 0, width: 0, height: 0 });
+	let pdfPreviewContainer: HTMLDivElement | null = null;
+	let containerWidth = $state(0);
+	let containerHeight = $state(0);
+
+	/**
+	 * Initialize PDF preview container and set up resize observer
+	 */
+	function initPdfContainer(element: HTMLDivElement) {
+		pdfPreviewContainer = element;
+		updateContainerDimensions();
+
+		const resizeObserver = new ResizeObserver(() => {
+			updateContainerDimensions();
+		});
+		resizeObserver.observe(element);
+
+		return {
+			destroy() {
+				resizeObserver.disconnect();
+			}
+		};
+	}
+
+	/**
+	 * Update container dimensions for responsive positioning
+	 */
+	function updateContainerDimensions() {
+		if (!pdfPreviewContainer) return;
+		containerWidth = pdfPreviewContainer.offsetWidth;
+		containerHeight = pdfPreviewContainer.offsetHeight;
+	}
+
+	/**
+	 * Convert percentage to pixels for display
+	 */
+	function percentToPixels(percent: number, dimension: number): number {
+		return (percent / 100) * dimension;
+	}
+
+	/**
+	 * Convert pixels to percentage for storage
+	 */
+	function pixelsToPercent(pixels: number, dimension: number): number {
+		return (pixels / dimension) * 100;
+	}
 
 	/**
 	 * Handle PDF file upload
@@ -103,25 +148,35 @@
 	/**
 	 * Start drawing signature
 	 */
-	function startDrawing(e: MouseEvent) {
+	function startDrawing(e: MouseEvent | TouchEvent) {
 		if (!ctx) return;
+		e.preventDefault();
 		isDrawing = true;
 		const rect = canvas.getBoundingClientRect();
 		const scaleX = canvas.width / rect.width;
 		const scaleY = canvas.height / rect.height;
+
+		const clientX = e instanceof MouseEvent ? e.clientX : e.touches[0].clientX;
+		const clientY = e instanceof MouseEvent ? e.clientY : e.touches[0].clientY;
+
 		ctx.beginPath();
-		ctx.moveTo((e.clientX - rect.left) * scaleX, (e.clientY - rect.top) * scaleY);
+		ctx.moveTo((clientX - rect.left) * scaleX, (clientY - rect.top) * scaleY);
 	}
 
 	/**
 	 * Draw signature
 	 */
-	function draw(e: MouseEvent) {
+	function draw(e: MouseEvent | TouchEvent) {
 		if (!isDrawing || !ctx) return;
+		e.preventDefault();
 		const rect = canvas.getBoundingClientRect();
 		const scaleX = canvas.width / rect.width;
 		const scaleY = canvas.height / rect.height;
-		ctx.lineTo((e.clientX - rect.left) * scaleX, (e.clientY - rect.top) * scaleY);
+
+		const clientX = e instanceof MouseEvent ? e.clientX : e.touches[0].clientX;
+		const clientY = e instanceof MouseEvent ? e.clientY : e.touches[0].clientY;
+
+		ctx.lineTo((clientX - rect.left) * scaleX, (clientY - rect.top) * scaleY);
 		ctx.stroke();
 	}
 
@@ -167,14 +222,15 @@
 	 * Add signature to current page
 	 */
 	function addSignatureToPage() {
-		if (!signatureImage) return;
+		if (!signatureImage || !containerWidth || !containerHeight) return;
 
+		// Start at center with default size (as percentages)
 		signatures.push({
 			image: signatureImage,
-			x: 100,
-			y: 100,
-			width: 200,
-			height: 100,
+			xPercent: 20,
+			yPercent: 20,
+			widthPercent: 30,
+			heightPercent: 15,
 			page: currentPage
 		});
 		signatures = signatures; // Trigger reactivity
@@ -183,27 +239,59 @@
 	/**
 	 * Start dragging signature
 	 */
-	function startDrag(e: MouseEvent, index: number) {
+	function startDrag(e: MouseEvent | TouchEvent, index: number) {
 		if ((e.target as HTMLElement).classList.contains('resize-handle')) return;
+		if (!pdfPreviewContainer) return;
 
+		e.preventDefault();
 		isDragging = true;
 		dragIndex = index;
-		dragStart = { x: e.clientX - signatures[index].x, y: e.clientY - signatures[index].y };
+
+		const rect = pdfPreviewContainer.getBoundingClientRect();
+		const clientX = e instanceof MouseEvent ? e.clientX : e.touches[0].clientX;
+		const clientY = e instanceof MouseEvent ? e.clientY : e.touches[0].clientY;
+
+		const currentPixelX = percentToPixels(signatures[index].xPercent, containerWidth);
+		const currentPixelY = percentToPixels(signatures[index].yPercent, containerHeight);
+
+		dragStart = {
+			x: clientX - rect.left - currentPixelX,
+			y: clientY - rect.top - currentPixelY
+		};
 	}
 
 	/**
 	 * Drag signature
 	 */
-	function onDrag(e: MouseEvent) {
+	function onDrag(e: MouseEvent | TouchEvent) {
+		if (!pdfPreviewContainer) return;
+
+		const clientX = e instanceof MouseEvent ? e.clientX : e.touches[0]?.clientX;
+		const clientY = e instanceof MouseEvent ? e.clientY : e.touches[0]?.clientY;
+
+		if (!clientX || !clientY) return;
+
+		const rect = pdfPreviewContainer.getBoundingClientRect();
+
 		if (isDragging && dragIndex >= 0) {
-			signatures[dragIndex].x = e.clientX - dragStart.x;
-			signatures[dragIndex].y = e.clientY - dragStart.y;
+			const newPixelX = clientX - rect.left - dragStart.x;
+			const newPixelY = clientY - rect.top - dragStart.y;
+
+			signatures[dragIndex].xPercent = pixelsToPercent(newPixelX, containerWidth);
+			signatures[dragIndex].yPercent = pixelsToPercent(newPixelY, containerHeight);
 			signatures = signatures;
 		} else if (isResizing && dragIndex >= 0) {
-			const dx = e.clientX - resizeStart.x;
-			const dy = e.clientY - resizeStart.y;
-			signatures[dragIndex].width = Math.max(50, resizeStart.width + dx);
-			signatures[dragIndex].height = Math.max(25, resizeStart.height + dy);
+			const newPixelX = clientX - rect.left;
+			const newPixelY = clientY - rect.top;
+
+			const dx = newPixelX - resizeStart.x;
+			const dy = newPixelY - resizeStart.y;
+
+			const newWidth = Math.max(50, resizeStart.width + dx);
+			const newHeight = Math.max(25, resizeStart.height + dy);
+
+			signatures[dragIndex].widthPercent = pixelsToPercent(newWidth, containerWidth);
+			signatures[dragIndex].heightPercent = pixelsToPercent(newHeight, containerHeight);
 			signatures = signatures;
 		}
 	}
@@ -220,15 +308,23 @@
 	/**
 	 * Start resizing signature
 	 */
-	function startResize(e: MouseEvent, index: number) {
+	function startResize(e: MouseEvent | TouchEvent, index: number) {
+		if (!pdfPreviewContainer) return;
+
 		e.stopPropagation();
+		e.preventDefault();
 		isResizing = true;
 		dragIndex = index;
+
+		const rect = pdfPreviewContainer.getBoundingClientRect();
+		const clientX = e instanceof MouseEvent ? e.clientX : e.touches[0].clientX;
+		const clientY = e instanceof MouseEvent ? e.clientY : e.touches[0].clientY;
+
 		resizeStart = {
-			x: e.clientX,
-			y: e.clientY,
-			width: signatures[index].width,
-			height: signatures[index].height
+			x: clientX - rect.left,
+			y: clientY - rect.top,
+			width: percentToPixels(signatures[index].widthPercent, containerWidth),
+			height: percentToPixels(signatures[index].heightPercent, containerHeight)
 		};
 	}
 
@@ -250,38 +346,27 @@
 		const pdfDoc = await PDFDocument.load(arrayBuffer);
 		const pages = pdfDoc.getPages();
 
-		// Get the original PDF to calculate scale factor
-		const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-
 		for (const sig of signatures) {
 			const page = pages[sig.page];
 			const { width: pdfWidth, height: pdfHeight } = page.getSize();
-
-			// Get rendered page dimensions (with scale 1.5)
-			const renderedPage = await pdf.getPage(sig.page + 1);
-			const viewport = renderedPage.getViewport({ scale: 1.5 });
-
-			// Calculate scale factor from rendered to original PDF
-			const scaleX = pdfWidth / viewport.width;
-			const scaleY = pdfHeight / viewport.height;
 
 			// Convert data URL to bytes
 			const base64Data = sig.image.split(',')[1];
 			const imageBytes = Uint8Array.from(atob(base64Data), c => c.charCodeAt(0));
 			const image = await pdfDoc.embedPng(imageBytes);
 
-			// Scale coordinates and dimensions to match original PDF
-			const scaledX = sig.x * scaleX;
-			const scaledY = sig.y * scaleY;
-			const scaledWidth = sig.width * scaleX;
-			const scaledHeight = sig.height * scaleY;
+			// Convert percentages to PDF coordinates
+			const x = (sig.xPercent / 100) * pdfWidth;
+			const y = (sig.yPercent / 100) * pdfHeight;
+			const width = (sig.widthPercent / 100) * pdfWidth;
+			const height = (sig.heightPercent / 100) * pdfHeight;
 
-			// Add signature to page (flip Y coordinate for PDF)
+			// Add signature to page (flip Y coordinate for PDF coordinate system)
 			page.drawImage(image, {
-				x: scaledX,
-				y: pdfHeight - scaledY - scaledHeight,
-				width: scaledWidth,
-				height: scaledHeight
+				x,
+				y: pdfHeight - y - height,
+				width,
+				height
 			});
 		}
 
@@ -296,7 +381,7 @@
 	}
 </script>
 
-<svelte:window on:mousemove={onDrag} on:mouseup={stopDrag} />
+<svelte:window on:mousemove={onDrag} on:mouseup={stopDrag} on:touchmove={onDrag} on:touchend={stopDrag} on:touchcancel={stopDrag} />
 
 <div class="min-h-screen bg-base-200">
 	<div class="container mx-auto p-8">
@@ -339,16 +424,21 @@
 							<h2 class="card-title">Document Preview</h2>
 
 							{#if pdfPages[currentPage]}
-								<div class="relative border-2 border-base-300 rounded-lg overflow-hidden">
+								<div class="relative border-2 border-base-300 rounded-lg overflow-hidden" use:initPdfContainer>
 									<img src={pdfPages[currentPage]} alt="PDF Page" class="w-full" />
 
 									<!-- Signature Overlays -->
 									{#each signatures.filter(s => s.page === currentPage) as sig, i}
+										{@const x = percentToPixels(sig.xPercent, containerWidth)}
+										{@const y = percentToPixels(sig.yPercent, containerHeight)}
+										{@const width = percentToPixels(sig.widthPercent, containerWidth)}
+										{@const height = percentToPixels(sig.heightPercent, containerHeight)}
 										<!-- svelte-ignore a11y_no_static_element_interactions -->
 										<div
 											class="absolute cursor-move border-2 border-primary"
-											style="left: {sig.x}px; top: {sig.y}px; width: {sig.width}px; height: {sig.height}px;"
+											style="left: {x}px; top: {y}px; width: {width}px; height: {height}px; touch-action: none;"
 											onmousedown={(e) => startDrag(e, signatures.indexOf(sig))}
+											ontouchstart={(e) => startDrag(e, signatures.indexOf(sig))}
 											role="button"
 											tabindex="0"
 											aria-label="Drag signature to reposition"
@@ -362,6 +452,7 @@
 											<div
 												class="resize-handle absolute bottom-0 right-0 w-4 h-4 bg-primary cursor-se-resize"
 												onmousedown={(e) => startResize(e, signatures.indexOf(sig))}
+												ontouchstart={(e) => startResize(e, signatures.indexOf(sig))}
 												role="button"
 												tabindex="0"
 												aria-label="Resize signature"
@@ -439,6 +530,10 @@
 										onmousemove={draw}
 										onmouseup={stopDrawing}
 										onmouseleave={stopDrawing}
+										ontouchstart={startDrawing}
+										ontouchmove={draw}
+										ontouchend={stopDrawing}
+										ontouchcancel={stopDrawing}
 									></canvas>
 									<div class="card-actions justify-end mt-4">
 										<button class="btn btn-outline btn-sm" onclick={clearSignature}>
