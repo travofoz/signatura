@@ -100,7 +100,7 @@
 	 * Initialize PDF.js worker
 	 */
 	onMount(async () => {
-		pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://unpkg.com/pdfjs-dist@5.4.394/build/pdf.worker.min.js';
+		pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
 	});
 
 	/**
