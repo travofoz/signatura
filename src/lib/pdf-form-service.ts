@@ -9,6 +9,7 @@ export interface FormField {
   required: boolean;
   options?: string[];
   bounds?: { x: number; y: number; width: number; height: number };
+  pageIndices?: number[]; // Pages where this field appears
   maxLength?: number;
   readOnly: boolean;
 }
@@ -110,6 +111,7 @@ export class PDFFormService {
       required: field.isRequired(),
       options: this.getFieldOptions(field),
       bounds: this.getFieldBounds(field),
+      pageIndices: this.getFieldPageIndices(field),
       maxLength: this.getMaxLength(field),
       readOnly: this.isReadOnly(field)
     };
@@ -129,33 +131,56 @@ export class PDFFormService {
 
   private getCurrentFieldValue(field: PDFField): any {
     try {
+      // Type-safe field value extraction
+      const fieldName = field.getName();
+      if (!fieldName) return null;
+
       switch (field.constructor.name) {
-        case 'PDFTextField': 
-          return (field as any).getText() || '';
-        case 'PDFCheckBox': 
-          return (field as any).isChecked();
-        case 'PDFRadioGroup': 
-          return (field as any).getSelected() || '';
-        case 'PDFDropdown': 
-          return (field as any).getSelected() || '';
-        case 'PDFOptionList': 
-          return (field as any).getSelected() || [];
+        case 'PDFTextField': {
+          const textField = field as any;
+          return typeof textField.getText === 'function' ? textField.getText() || '' : '';
+        }
+        case 'PDFCheckBox': {
+          const checkBox = field as any;
+          return typeof checkBox.isChecked === 'function' ? checkBox.isChecked() : false;
+        }
+        case 'PDFRadioGroup': {
+          const radioGroup = field as any;
+          return typeof radioGroup.getSelected === 'function' ? radioGroup.getSelected() || '' : '';
+        }
+        case 'PDFDropdown': {
+          const dropdown = field as any;
+          return typeof dropdown.getSelected === 'function' ? dropdown.getSelected() || '' : '';
+        }
+        case 'PDFOptionList': {
+          const optionList = field as any;
+          return typeof optionList.getSelected === 'function' ? optionList.getSelected() || [] : [];
+        }
         case 'PDFSignature': 
           return null;
         default: 
           return null;
       }
-    } catch {
+    } catch (error) {
+      console.warn(`Failed to get current value for field ${field.getName()}:`, error);
       return null;
     }
   }
 
   private getFieldOptions(field: PDFField): string[] | undefined {
     try {
-      if (['PDFDropdown', 'PDFOptionList', 'PDFRadioGroup'].includes(field.constructor.name)) {
-        return (field as any).getOptions();
+      const fieldType = field.constructor.name;
+      if (!['PDFDropdown', 'PDFOptionList', 'PDFRadioGroup'].includes(fieldType)) {
+        return undefined;
       }
-    } catch {
+
+      const fieldObj = field as any;
+      if (typeof fieldObj.getOptions === 'function') {
+        const options = fieldObj.getOptions();
+        return Array.isArray(options) ? options : undefined;
+      }
+    } catch (error) {
+      console.warn(`Failed to get options for field ${field.getName()}:`, error);
       return undefined;
     }
     return undefined;
@@ -179,12 +204,46 @@ export class PDFFormService {
     return undefined;
   }
 
+  private getFieldPageIndices(field: PDFField): number[] | undefined {
+    try {
+      const widgets = (field as any).acroField.getWidgets();
+      const pageIndices: number[] = [];
+      
+      for (const widget of widgets) {
+        const pageRef = widget.getPage();
+        if (pageRef && this.pdfDoc) {
+          // Find the page index by comparing page references
+          const pages = this.pdfDoc.getPages();
+          const pageIndex = pages.findIndex(page => {
+            const pageDict = page.ref;
+            return pageDict && pageDict.toString() === pageRef.toString();
+          });
+          
+          if (pageIndex !== -1 && !pageIndices.includes(pageIndex)) {
+            pageIndices.push(pageIndex);
+          }
+        }
+      }
+      
+      return pageIndices.length > 0 ? pageIndices : undefined;
+    } catch {
+      return undefined;
+    }
+  }
+
   private getMaxLength(field: PDFField): number | undefined {
     try {
-      if (field.constructor.name === 'PDFTextField') {
-        return (field as any).getMaxLen();
+      if (field.constructor.name !== 'PDFTextField') {
+        return undefined;
       }
-    } catch {
+
+      const textField = field as any;
+      if (typeof textField.getMaxLen === 'function') {
+        const maxLength = textField.getMaxLen();
+        return typeof maxLength === 'number' && maxLength > 0 ? maxLength : undefined;
+      }
+    } catch (error) {
+      console.warn(`Failed to get max length for field ${field.getName()}:`, error);
       return undefined;
     }
     return undefined;
@@ -192,39 +251,69 @@ export class PDFFormService {
 
   private isReadOnly(field: PDFField): boolean {
     try {
-      return (field as any).isReadOnly();
-    } catch {
-      return false;
+      const fieldObj = field as any;
+      if (typeof fieldObj.isReadOnly === 'function') {
+        return fieldObj.isReadOnly();
+      }
+    } catch (error) {
+      console.warn(`Failed to check read-only status for field ${field.getName()}:`, error);
     }
+    return false;
   }
 
   private setFieldValue(field: PDFField, value: any): void {
     try {
+      const fieldName = field.getName();
+      if (!fieldName) return;
+
       switch (field.constructor.name) {
-        case 'PDFTextField':
-          (field as any).setText(value?.toString() || '');
-          break;
-        case 'PDFCheckBox':
-          value ? (field as any).check() : (field as any).uncheck();
-          break;
-        case 'PDFRadioGroup':
-          if (value && (field as any).getOptions().includes(value)) {
-            (field as any).select(value);
+        case 'PDFTextField': {
+          const textField = field as any;
+          if (typeof textField.setText === 'function') {
+            textField.setText(value?.toString() || '');
           }
           break;
-        case 'PDFDropdown':
-          if (value && (field as any).getOptions().includes(value)) {
-            (field as any).select(value);
+        }
+        case 'PDFCheckBox': {
+          const checkBox = field as any;
+          if (typeof checkBox.check === 'function' && typeof checkBox.uncheck === 'function') {
+            value ? checkBox.check() : checkBox.uncheck();
           }
           break;
-        case 'PDFOptionList':
-          if (Array.isArray(value)) {
-            const validOptions = value.filter(opt => (field as any).getOptions().includes(opt));
-            (field as any).select(validOptions);
-          } else if (value && (field as any).getOptions().includes(value)) {
-            (field as any).select([value]);
+        }
+        case 'PDFRadioGroup': {
+          const radioGroup = field as any;
+          if (typeof radioGroup.select === 'function' && typeof radioGroup.getOptions === 'function') {
+            const options = radioGroup.getOptions();
+            if (value && Array.isArray(options) && options.includes(value)) {
+              radioGroup.select(value);
+            }
           }
           break;
+        }
+        case 'PDFDropdown': {
+          const dropdown = field as any;
+          if (typeof dropdown.select === 'function' && typeof dropdown.getOptions === 'function') {
+            const options = dropdown.getOptions();
+            if (value && Array.isArray(options) && options.includes(value)) {
+              dropdown.select(value);
+            }
+          }
+          break;
+        }
+        case 'PDFOptionList': {
+          const optionList = field as any;
+          if (typeof optionList.select === 'function' && typeof optionList.getOptions === 'function') {
+            const options = optionList.getOptions();
+            if (Array.isArray(value)) {
+              const validOptions = value.filter(opt => Array.isArray(options) && options.includes(opt));
+              optionList.select(validOptions);
+            } else if (value && Array.isArray(options) && options.includes(value)) {
+              optionList.select([value]);
+            }
+          }
+          break;
+        }
       }
     } catch (error) {
       console.warn(`Failed to set field value for ${field.getName()}:`, error);

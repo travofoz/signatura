@@ -43,7 +43,7 @@
 		handleChange(target.value);
 	}
 
-	const fieldId = $derived(`field-${field.name.replace(/[^a-zA-Z0-9]/g, '-')}`);
+	const fieldId = $derived(`field-${field.name.replace(/[^a-zA-Z0-9\u00C0-\uFFFF]/g, '-')}`);
 </script>
 
 <div class="form-field mb-4">
@@ -78,12 +78,13 @@
 
 	{:else if field.type === 'checkbox'}
 		<div class="form-control">
-			<label class="label cursor-pointer">
+			<label class="label cursor-pointer" for={fieldId}>
 				<span class="label-text font-medium">{field.name}</span>
 				{#if field.required}
 					<span class="label-text-alt text-error">*</span>
 				{/if}
 				<input
+					id={fieldId}
 					type="checkbox"
 					class="checkbox checkbox-primary"
 					checked={value}
@@ -103,19 +104,20 @@
 				{/if}
 			</div>
 			<div class="space-y-2">
-				{#each field.options || [] as option}
+				{#each field.options || [] as option, index}
 					<label class="label cursor-pointer">
 						<span class="label-text">{option}</span>
-							<input
-								type="radio"
-								class="radio radio-primary"
-								name={fieldId}
-								value={option}
-								checked={value === option}
-								onchange={handleRadioChange}
-								disabled={field.readOnly}
-								data-field-name={field.name}
-							/>
+						<input
+							type="radio"
+							class="radio radio-primary"
+							name={fieldId}
+							id={`${fieldId}-${index}`}
+							value={option}
+							checked={value === option}
+							onchange={handleRadioChange}
+							disabled={field.readOnly}
+							data-field-name={field.name}
+						/>
 					</label>
 				{/each}
 			</div>

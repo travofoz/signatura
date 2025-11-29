@@ -1,9 +1,13 @@
 <script lang="ts">
-	import { PDFDocument } from 'pdf-lib';
 	import { onMount } from 'svelte';
-	import * as pdfjsLib from 'pdfjs-dist';
 	import { PDFFormService, type FormField } from '$lib/pdf-form-service';
 	import FormFieldComponent from '$lib/components/FormField.svelte';
+	
+	// Lazy load PDF libraries to reduce initial bundle size
+	let PDFDocument: typeof import('pdf-lib').PDFDocument;
+	let pdfjsLib: typeof import('pdfjs-dist');
+	let pdfLibLoaded = $state(false);
+	let pdfjsLibLoaded = $state(false);
 
 	let pdfFile: File | null = $state(null);
 	let pdfPages: string[] = $state([]);
@@ -104,10 +108,37 @@
 	 */
 	async function handleFileUpload(event: Event) {
 		const input = event.target as HTMLInputElement;
-		if (!input.files?.[0]) return;
+		const file = input.files?.[0];
+		if (!file) return;
 
-		pdfFile = input.files[0];
+		// Validate file
+		const validation = validatePDFFile(file);
+		if (!validation.valid) {
+			alert(validation.error);
+			input.value = ''; // Clear the input
+			return;
+		}
+
+		pdfFile = file;
 		await loadPDF(pdfFile);
+	}
+
+	/**
+	 * Validate PDF file
+	 */
+	function validatePDFFile(file: File): { valid: boolean; error?: string } {
+		// Check file type
+		if (file.type !== 'application/pdf') {
+			return { valid: false, error: 'Invalid file type. Please upload a PDF file.' };
+		}
+
+		// Check file size (max 50MB)
+		const maxSize = 50 * 1024 * 1024;
+		if (file.size > maxSize) {
+			return { valid: false, error: 'File too large. Please upload PDFs smaller than 50MB.' };
+		}
+
+		return { valid: true };
 	}
 
 	/**
@@ -116,25 +147,51 @@
 	function handleDrop(event: DragEvent) {
 		event.preventDefault();
 		const file = event.dataTransfer?.files[0];
-		if (file && file.type === 'application/pdf') {
-			pdfFile = file;
-			loadPDF(file);
+		if (!file) return;
+
+		// Validate file
+		const validation = validatePDFFile(file);
+		if (!validation.valid) {
+			alert(validation.error);
+			return;
 		}
+
+		pdfFile = file;
+		loadPDF(file);
 	}
 
 	/**
-	 * Initialize PDF.js worker
+	 * Initialize PDF.js worker and lazy load libraries
 	 */
 	onMount(async () => {
-		pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
+		// Load PDF libraries only when needed
+		try {
+			const [pdfLibModule, pdfjsModule] = await Promise.all([
+				import('pdf-lib'),
+				import('pdfjs-dist')
+			]);
+			
+			PDFDocument = pdfLibModule.PDFDocument;
+			pdfjsLib = pdfjsModule;
+			
+			// Initialize PDF.js worker
+			pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
+			
+			pdfLibLoaded = true;
+			pdfjsLibLoaded = true;
+		} catch (error) {
+			console.error('Failed to load PDF libraries:', error);
+			alert('Failed to load PDF libraries. Please refresh the page.');
+		}
 	});
 
 	/**
 	 * Load and render PDF pages
 	 */
 	async function loadPDF(file: File) {
-		if (!pdfjsLib) {
+		if (!pdfjsLibLoaded || !pdfjsLib) {
 			console.error('PDF.js library not loaded');
+			alert('PDF libraries are still loading. Please wait a moment and try again.');
 			return;
 		}
 
@@ -172,7 +229,8 @@
 			await detectFormFields(arrayBuffer);
 		} catch (error) {
 			console.error('Failed to load PDF:', error);
-			alert('Failed to load PDF. Please check the file and try again.');
+			const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+			alert(`Failed to load PDF: ${errorMessage}. Please check the file and try again.`);
 		}
 	}
 
@@ -242,8 +300,12 @@
 	function hasFieldOnPage(field: FormField, pageNum: number): boolean {
 		if (!field.bounds) return false;
 		
-		// For now, assume all fields are on page 0
-		// TODO: Implement proper page detection using pdf-lib field page info
+		// Check if field has page indices and includes current page
+		if (field.pageIndices && field.pageIndices.length > 0) {
+			return field.pageIndices.includes(pageNum);
+		}
+		
+		// Fallback: assume field is on page 0 if no page info available
 		return pageNum === 0;
 	}
 
@@ -364,6 +426,57 @@
 	}
 
 	/**
+	 * Validate uploaded image file
+	 */
+	function validateImageFile(file: File): { valid: boolean; error?: string } {
+		// Check file type
+		const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
+		if (!allowedTypes.includes(file.type)) {
+			return { valid: false, error: 'Invalid file type. Please upload PNG, JPG, or GIF images only.' };
+		}
+
+		// Check file size (max 5MB)
+		const maxSize = 5 * 1024 * 1024;
+		if (file.size > maxSize) {
+			return { valid: false, error: 'File too large. Please upload images smaller than 5MB.' };
+		}
+
+		return { valid: true };
+	}
+
+	/**
+	 * Safely convert data URL to bytes
+	 */
+	function dataURLToBytes(dataURL: string): Uint8Array | null {
+		try {
+			// Validate data URL format
+			if (!dataURL.startsWith('data:image/')) {
+				throw new Error('Invalid data URL format');
+			}
+
+			const parts = dataURL.split(',');
+			if (parts.length !== 2) {
+				throw new Error('Malformed data URL');
+			}
+
+			const base64Data = parts[1];
+			if (!base64Data) {
+				throw new Error('Empty base64 data');
+			}
+
+			// Validate base64 string
+			if (!/^[A-Za-z0-9+/]*={0,2}$/.test(base64Data)) {
+				throw new Error('Invalid base64 encoding');
+			}
+
+			return Uint8Array.from(atob(base64Data), c => c.charCodeAt(0));
+		} catch (error) {
+			console.error('Failed to convert data URL to bytes:', error);
+			return null;
+		}
+	}
+
+	/**
 	 * Handle signature image upload
 	 */
 	function handleSignatureUpload(event: Event) {
@@ -371,9 +484,27 @@
 		const file = input.files?.[0];
 		if (!file) return;
 
+		// Validate file
+		const validation = validateImageFile(file);
+		if (!validation.valid) {
+			alert(validation.error);
+			input.value = ''; // Clear the input
+			return;
+		}
+
 		const reader = new FileReader();
 		reader.onload = (e) => {
-			signatureImage = e.target?.result as string;
+			const result = e.target?.result;
+			if (typeof result === 'string' && result.startsWith('data:image/')) {
+				signatureImage = result;
+			} else {
+				alert('Failed to load image. Please try again.');
+				input.value = '';
+			}
+		};
+		reader.onerror = () => {
+			alert('Failed to read file. Please try again.');
+			input.value = '';
 		};
 		reader.readAsDataURL(file);
 	}
@@ -502,37 +633,63 @@
 	async function downloadSignedPDF() {
 		if (!pdfFile) return;
 
-		// Validate form if there are form fields
-		if (formFields.length > 0 && !validateForm()) {
-			alert('Please fix the form errors before downloading.');
+		// Check if PDF libraries are loaded
+		if (!pdfLibLoaded || !PDFDocument) {
+			alert('PDF libraries are still loading. Please wait a moment and try again.');
 			return;
 		}
 
-		const arrayBuffer = await pdfFile.arrayBuffer();
-		
-		// Load document with form service to handle form data
-		await formService.loadDocument(arrayBuffer);
-		
-		// Fill form data if any fields exist
-		if (formFields.length > 0) {
-			await formService.fillForm(formData);
+		// Validate form if there are form fields
+		if (formFields.length > 0 && !validateForm()) {
+			const errorCount = Object.keys(formErrors).length;
+			alert(`Please fix ${errorCount} form error${errorCount > 1 ? 's' : ''} before downloading.`);
+			return;
 		}
 
-		// Get the modified PDF with form data
-		let pdfBytes = await formService.saveDocument();
-		
-		// Load the modified PDF to add signatures
-		const pdfDoc = await PDFDocument.load(pdfBytes);
+		try {
+			const arrayBuffer = await pdfFile.arrayBuffer();
+			
+			// Load document with form service to handle form data
+			await formService.loadDocument(arrayBuffer);
+			
+			// Fill form data if any fields exist
+			if (formFields.length > 0) {
+				await formService.fillForm(formData);
+			}
+
+			// Get the modified PDF with form data
+			let pdfBytes = await formService.saveDocument();
+			
+			// Load the modified PDF to add signatures
+			const pdfDoc = await PDFDocument.load(pdfBytes);
 		const pages = pdfDoc.getPages();
 
 		for (const sig of signatures) {
 			const page = pages[sig.page];
 			const { width: pdfWidth, height: pdfHeight } = page.getSize();
 
-			// Convert data URL to bytes
-			const base64Data = sig.image.split(',')[1];
-			const imageBytes = Uint8Array.from(atob(base64Data), c => c.charCodeAt(0));
-			const image = await pdfDoc.embedPng(imageBytes);
+			// Safely convert data URL to bytes
+			const imageBytes = dataURLToBytes(sig.image);
+			if (!imageBytes) {
+				console.error('Failed to process signature image:', sig.image.substring(0, 50) + '...');
+				continue; // Skip this signature but continue with others
+			}
+
+			let image;
+			try {
+				// Try to embed as PNG first, fallback to JPEG if needed
+				if (sig.image.startsWith('data:image/png')) {
+					image = await pdfDoc.embedPng(imageBytes);
+				} else if (sig.image.startsWith('data:image/jpeg') || sig.image.startsWith('data:image/jpg')) {
+					image = await pdfDoc.embedJpg(imageBytes);
+				} else {
+					// Try PNG as fallback for other image types
+					image = await pdfDoc.embedPng(imageBytes);
+				}
+			} catch (error) {
+				console.error('Failed to embed signature image:', error);
+				continue; // Skip this signature but continue with others
+			}
 
 			// Convert percentages to PDF coordinates
 			const x = (sig.xPercent / 100) * pdfWidth;
@@ -549,14 +706,19 @@
 			});
 		}
 
-		pdfBytes = await pdfDoc.save();
-		const blob = new Blob([new Uint8Array(pdfBytes)], { type: 'application/pdf' });
-		const url = URL.createObjectURL(blob);
-		const a = document.createElement('a');
-		a.href = url;
-		a.download = 'completed-' + (pdfFile?.name || 'document.pdf');
-		a.click();
-		URL.revokeObjectURL(url);
+			pdfBytes = await pdfDoc.save();
+			const blob = new Blob([new Uint8Array(pdfBytes)], { type: 'application/pdf' });
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = 'completed-' + (pdfFile?.name || 'document.pdf');
+			a.click();
+			URL.revokeObjectURL(url);
+		} catch (error) {
+			console.error('Failed to generate PDF:', error);
+			const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+			alert(`Failed to generate PDF: ${errorMessage}. Please try again.`);
+		}
 	}
 </script>
 

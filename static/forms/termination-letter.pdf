@@ -1,0 +1,835 @@
+<!doctype html>
+<html class="no-js">
+<head>
+
+	<meta charset="utf-8" />
+<script type="text/javascript">
+/* <![CDATA[ */
+var gform;gform||(document.addEventListener("gform_main_scripts_loaded",function(){gform.scriptsLoaded=!0}),document.addEventListener("gform/theme/scripts_loaded",function(){gform.themeScriptsLoaded=!0}),window.addEventListener("DOMContentLoaded",function(){gform.domLoaded=!0}),gform={domLoaded:!1,scriptsLoaded:!1,themeScriptsLoaded:!1,isFormEditor:()=>"function"==typeof InitializeEditor,callIfLoaded:function(o){return!(!gform.domLoaded||!gform.scriptsLoaded||!gform.themeScriptsLoaded&&!gform.isFormEditor()||(gform.isFormEditor()&&console.warn("The use of gform.initializeOnLoaded() is deprecated in the form editor context and will be removed in Gravity Forms 3.1."),o(),0))},initializeOnLoaded:function(o){gform.callIfLoaded(o)||(document.addEventListener("gform_main_scripts_loaded",()=>{gform.scriptsLoaded=!0,gform.callIfLoaded(o)}),document.addEventListener("gform/theme/scripts_loaded",()=>{gform.themeScriptsLoaded=!0,gform.callIfLoaded(o)}),window.addEventListener("DOMContentLoaded",()=>{gform.domLoaded=!0,gform.callIfLoaded(o)}))},hooks:{action:{},filter:{}},addAction:function(o,r,e,t){gform.addHook("action",o,r,e,t)},addFilter:function(o,r,e,t){gform.addHook("filter",o,r,e,t)},doAction:function(o){gform.doHook("action",o,arguments)},applyFilters:function(o){return gform.doHook("filter",o,arguments)},removeAction:function(o,r){gform.removeHook("action",o,r)},removeFilter:function(o,r,e){gform.removeHook("filter",o,r,e)},addHook:function(o,r,e,t,n){null==gform.hooks[o][r]&&(gform.hooks[o][r]=[]);var d=gform.hooks[o][r];null==n&&(n=r+"_"+d.length),gform.hooks[o][r].push({tag:n,callable:e,priority:t=null==t?10:t})},doHook:function(r,o,e){var t;if(e=Array.prototype.slice.call(e,1),null!=gform.hooks[r][o]&&((o=gform.hooks[r][o]).sort(function(o,r){return o.priority-r.priority}),o.forEach(function(o){"function"!=typeof(t=o.callable)&&(t=window[t]),"action"==r?t.apply(null,e):e[0]=t.apply(null,e)})),"filter"==r)return e[0]},removeHook:function(o,r,t,n){var e;null!=gform.hooks[o][r]&&(e=(e=gform.hooks[o][r]).filter(function(o,r,e){return!!(null!=n&&n!=o.tag||null!=t&&t!=o.priority)}),gform.hooks[o][r]=e)}});
+/* ]]> */
+</script>
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><script type="text/javascript">(window.NREUM||(NREUM={})).init={ajax:{deny_list:["bam.nr-data.net"]},feature_flags:["soft_nav"]};(window.NREUM||(NREUM={})).loader_config={licenseKey:"NRJS-ca47a89610dec962a1b",applicationID:"502703300",browserID:"502705553"};;/*! For license information please see nr-loader-rum-1.303.0.min.js.LICENSE.txt */
+(()=>{var e,t,r={122:(e,t,r)=>{"use strict";r.d(t,{a:()=>i});var n=r(944);function i(e,t){try{if(!e||"object"!=typeof e)return(0,n.R)(3);if(!t||"object"!=typeof t)return(0,n.R)(4);const r=Object.create(Object.getPrototypeOf(t),Object.getOwnPropertyDescriptors(t)),a=0===Object.keys(r).length?e:r;for(let o in a)if(void 0!==e[o])try{if(null===e[o]){r[o]=null;continue}Array.isArray(e[o])&&Array.isArray(t[o])?r[o]=Array.from(new Set([...e[o],...t[o]])):"object"==typeof e[o]&&"object"==typeof t[o]?r[o]=i(e[o],t[o]):r[o]=e[o]}catch(e){r[o]||(0,n.R)(1,e)}return r}catch(e){(0,n.R)(2,e)}}},154:(e,t,r)=>{"use strict";r.d(t,{OF:()=>c,RI:()=>i,WN:()=>u,bv:()=>a,gm:()=>o,mw:()=>s,sb:()=>d});var n=r(863);const i="undefined"!=typeof window&&!!window.document,a="undefined"!=typeof WorkerGlobalScope&&("undefined"!=typeof self&&self instanceof WorkerGlobalScope&&self.navigator instanceof WorkerNavigator||"undefined"!=typeof globalThis&&globalThis instanceof WorkerGlobalScope&&globalThis.navigator instanceof WorkerNavigator),o=i?window:"undefined"!=typeof WorkerGlobalScope&&("undefined"!=typeof self&&self instanceof WorkerGlobalScope&&self||"undefined"!=typeof globalThis&&globalThis instanceof WorkerGlobalScope&&globalThis),s=Boolean("hidden"===o?.document?.visibilityState),c=/iPad|iPhone|iPod/.test(o.navigator?.userAgent),d=c&&"undefined"==typeof SharedWorker,u=((()=>{const e=o.navigator?.userAgent?.match(/Firefox[/\s](\d+\.\d+)/);Array.isArray(e)&&e.length>=2&&e[1]})(),Date.now()-(0,n.t)())},163:(e,t,r)=>{"use strict";r.d(t,{j:()=>E});var n=r(384),i=r(741);var a=r(555);r(860).K7.genericEvents;const o="experimental.resources",s="register",c=e=>{if(!e||"string"!=typeof e)return!1;try{document.createDocumentFragment().querySelector(e)}catch{return!1}return!0};var d=r(614),u=r(944),l=r(122);const f="[data-nr-mask]",g=e=>(0,l.a)(e,(()=>{const e={feature_flags:[],experimental:{allow_registered_children:!1,resources:!1},mask_selector:"*",block_selector:"[data-nr-block]",mask_input_options:{color:!1,date:!1,"datetime-local":!1,email:!1,month:!1,number:!1,range:!1,search:!1,tel:!1,text:!1,time:!1,url:!1,week:!1,textarea:!1,select:!1,password:!0}};return{ajax:{deny_list:void 0,block_internal:!0,enabled:!0,autoStart:!0},api:{get allow_registered_children(){return e.feature_flags.includes(s)||e.experimental.allow_registered_children},set allow_registered_children(t){e.experimental.allow_registered_children=t},duplicate_registered_data:!1},browser_consent_mode:{enabled:!1},distributed_tracing:{enabled:void 0,exclude_newrelic_header:void 0,cors_use_newrelic_header:void 0,cors_use_tracecontext_headers:void 0,allowed_origins:void 0},get feature_flags(){return e.feature_flags},set feature_flags(t){e.feature_flags=t},generic_events:{enabled:!0,autoStart:!0},harvest:{interval:30},jserrors:{enabled:!0,autoStart:!0},logging:{enabled:!0,autoStart:!0},metrics:{enabled:!0,autoStart:!0},obfuscate:void 0,page_action:{enabled:!0},page_view_event:{enabled:!0,autoStart:!0},page_view_timing:{enabled:!0,autoStart:!0},performance:{capture_marks:!1,capture_measures:!1,capture_detail:!0,resources:{get enabled(){return e.feature_flags.includes(o)||e.experimental.resources},set enabled(t){e.experimental.resources=t},asset_types:[],first_party_domains:[],ignore_newrelic:!0}},privacy:{cookies_enabled:!0},proxy:{assets:void 0,beacon:void 0},session:{expiresMs:d.wk,inactiveMs:d.BB},session_replay:{autoStart:!0,enabled:!1,preload:!1,sampling_rate:10,error_sampling_rate:100,collect_fonts:!1,inline_images:!1,fix_stylesheets:!0,mask_all_inputs:!0,get mask_text_selector(){return e.mask_selector},set mask_text_selector(t){c(t)?e.mask_selector="".concat(t,",").concat(f):""===t||null===t?e.mask_selector=f:(0,u.R)(5,t)},get block_class(){return"nr-block"},get ignore_class(){return"nr-ignore"},get mask_text_class(){return"nr-mask"},get block_selector(){return e.block_selector},set block_selector(t){c(t)?e.block_selector+=",".concat(t):""!==t&&(0,u.R)(6,t)},get mask_input_options(){return e.mask_input_options},set mask_input_options(t){t&&"object"==typeof t?e.mask_input_options={...t,password:!0}:(0,u.R)(7,t)}},session_trace:{enabled:!0,autoStart:!0},soft_navigations:{enabled:!0,autoStart:!0},spa:{enabled:!0,autoStart:!0},ssl:void 0,user_actions:{enabled:!0,elementAttributes:["id","className","tagName","type"]}}})());var p=r(154),h=r(324);let m=0;const v={buildEnv:h.F3,distMethod:h.Xs,version:h.xv,originTime:p.WN},b={consented:!1},y={appMetadata:{},get consented(){return this.session?.state?.consent||b.consented},set consented(e){b.consented=e},customTransaction:void 0,denyList:void 0,disabled:!1,harvester:void 0,isolatedBacklog:!1,isRecording:!1,loaderType:void 0,maxBytes:3e4,obfuscator:void 0,onerror:void 0,ptid:void 0,releaseIds:{},session:void 0,timeKeeper:void 0,registeredEntities:[],jsAttributesMetadata:{bytes:0},get harvestCount(){return++m}},_=e=>{const t=(0,l.a)(e,y),r=Object.keys(v).reduce((e,t)=>(e[t]={value:v[t],writable:!1,configurable:!0,enumerable:!0},e),{});return Object.defineProperties(t,r)};var w=r(701);const x=e=>{const t=e.startsWith("http");e+="/",r.p=t?e:"https://"+e};var S=r(836),k=r(241);const R={accountID:void 0,trustKey:void 0,agentID:void 0,licenseKey:void 0,applicationID:void 0,xpid:void 0},A=e=>(0,l.a)(e,R),T=new Set;function E(e,t={},r,o){let{init:s,info:c,loader_config:d,runtime:u={},exposed:l=!0}=t;if(!c){const e=(0,n.pV)();s=e.init,c=e.info,d=e.loader_config}e.init=g(s||{}),e.loader_config=A(d||{}),c.jsAttributes??={},p.bv&&(c.jsAttributes.isWorker=!0),e.info=(0,a.D)(c);const f=e.init,h=[c.beacon,c.errorBeacon];T.has(e.agentIdentifier)||(f.proxy.assets&&(x(f.proxy.assets),h.push(f.proxy.assets)),f.proxy.beacon&&h.push(f.proxy.beacon),e.beacons=[...h],function(e){const t=(0,n.pV)();Object.getOwnPropertyNames(i.W.prototype).forEach(r=>{const n=i.W.prototype[r];if("function"!=typeof n||"constructor"===n)return;let a=t[r];e[r]&&!1!==e.exposed&&"micro-agent"!==e.runtime?.loaderType&&(t[r]=(...t)=>{const n=e[r](...t);return a?a(...t):n})})}(e),(0,n.US)("activatedFeatures",w.B),e.runSoftNavOverSpa&&=!0===f.soft_navigations.enabled&&f.feature_flags.includes("soft_nav")),u.denyList=[...f.ajax.deny_list||[],...f.ajax.block_internal?h:[]],u.ptid=e.agentIdentifier,u.loaderType=r,e.runtime=_(u),T.has(e.agentIdentifier)||(e.ee=S.ee.get(e.agentIdentifier),e.exposed=l,(0,k.W)({agentIdentifier:e.agentIdentifier,drained:!!w.B?.[e.agentIdentifier],type:"lifecycle",name:"initialize",feature:void 0,data:e.config})),T.add(e.agentIdentifier)}},234:(e,t,r)=>{"use strict";r.d(t,{W:()=>a});var n=r(836),i=r(687);class a{constructor(e,t){this.agentIdentifier=e,this.ee=n.ee.get(e),this.featureName=t,this.blocked=!1}deregisterDrain(){(0,i.x3)(this.agentIdentifier,this.featureName)}}},241:(e,t,r)=>{"use strict";r.d(t,{W:()=>a});var n=r(154);const i="newrelic";function a(e={}){try{n.gm.dispatchEvent(new CustomEvent(i,{detail:e}))}catch(e){}}},261:(e,t,r)=>{"use strict";r.d(t,{$9:()=>d,BL:()=>s,CH:()=>g,Dl:()=>_,Fw:()=>y,PA:()=>m,Pl:()=>n,Pv:()=>k,Tb:()=>l,U2:()=>a,V1:()=>S,Wb:()=>x,bt:()=>b,cD:()=>v,d3:()=>w,dT:()=>c,eY:()=>p,fF:()=>f,hG:()=>i,k6:()=>o,nb:()=>h,o5:()=>u});const n="api-",i="addPageAction",a="addToTrace",o="addRelease",s="finished",c="interaction",d="log",u="noticeError",l="pauseReplay",f="recordCustomEvent",g="recordReplay",p="register",h="setApplicationVersion",m="setCurrentRouteName",v="setCustomAttribute",b="setErrorHandler",y="setPageViewName",_="setUserId",w="start",x="wrapLogger",S="measure",k="consent"},289:(e,t,r)=>{"use strict";r.d(t,{GG:()=>a,Qr:()=>s,sB:()=>o});var n=r(878);function i(){return"undefined"==typeof document||"complete"===document.readyState}function a(e,t){if(i())return e();(0,n.sp)("load",e,t)}function o(e){if(i())return e();(0,n.DD)("DOMContentLoaded",e)}function s(e){if(i())return e();(0,n.sp)("popstate",e)}},324:(e,t,r)=>{"use strict";r.d(t,{F3:()=>i,Xs:()=>a,xv:()=>n});const n="1.303.0",i="PROD",a="CDN"},374:(e,t,r)=>{r.nc=(()=>{try{return document?.currentScript?.nonce}catch(e){}return""})()},384:(e,t,r)=>{"use strict";r.d(t,{NT:()=>o,US:()=>u,Zm:()=>s,bQ:()=>d,dV:()=>c,pV:()=>l});var n=r(154),i=r(863),a=r(910);const o={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net"};function s(){return n.gm.NREUM||(n.gm.NREUM={}),void 0===n.gm.newrelic&&(n.gm.newrelic=n.gm.NREUM),n.gm.NREUM}function c(){let e=s();return e.o||(e.o={ST:n.gm.setTimeout,SI:n.gm.setImmediate||n.gm.setInterval,CT:n.gm.clearTimeout,XHR:n.gm.XMLHttpRequest,REQ:n.gm.Request,EV:n.gm.Event,PR:n.gm.Promise,MO:n.gm.MutationObserver,FETCH:n.gm.fetch,WS:n.gm.WebSocket},(0,a.i)(...Object.values(e.o))),e}function d(e,t){let r=s();r.initializedAgents??={},t.initializedAt={ms:(0,i.t)(),date:new Date},r.initializedAgents[e]=t}function u(e,t){s()[e]=t}function l(){return function(){let e=s();const t=e.info||{};e.info={beacon:o.beacon,errorBeacon:o.errorBeacon,...t}}(),function(){let e=s();const t=e.init||{};e.init={...t}}(),c(),function(){let e=s();const t=e.loader_config||{};e.loader_config={...t}}(),s()}},389:(e,t,r)=>{"use strict";function n(e,t=500,r={}){const n=r?.leading||!1;let i;return(...r)=>{n&&void 0===i&&(e.apply(this,r),i=setTimeout(()=>{i=clearTimeout(i)},t)),n||(clearTimeout(i),i=setTimeout(()=>{e.apply(this,r)},t))}}function i(e){let t=!1;return(...r)=>{t||(t=!0,e.apply(this,r))}}r.d(t,{J:()=>i,s:()=>n})},555:(e,t,r)=>{"use strict";r.d(t,{D:()=>s,f:()=>o});var n=r(384),i=r(122);const a={beacon:n.NT.beacon,errorBeacon:n.NT.errorBeacon,licenseKey:void 0,applicationID:void 0,sa:void 0,queueTime:void 0,applicationTime:void 0,ttGuid:void 0,user:void 0,account:void 0,product:void 0,extra:void 0,jsAttributes:{},userAttributes:void 0,atts:void 0,transactionName:void 0,tNamePlain:void 0};function o(e){try{return!!e.licenseKey&&!!e.errorBeacon&&!!e.applicationID}catch(e){return!1}}const s=e=>(0,i.a)(e,a)},566:(e,t,r)=>{"use strict";r.d(t,{LA:()=>s,bz:()=>o});var n=r(154);const i="xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx";function a(e,t){return e?15&e[t]:16*Math.random()|0}function o(){const e=n.gm?.crypto||n.gm?.msCrypto;let t,r=0;return e&&e.getRandomValues&&(t=e.getRandomValues(new Uint8Array(30))),i.split("").map(e=>"x"===e?a(t,r++).toString(16):"y"===e?(3&a()|8).toString(16):e).join("")}function s(e){const t=n.gm?.crypto||n.gm?.msCrypto;let r,i=0;t&&t.getRandomValues&&(r=t.getRandomValues(new Uint8Array(e)));const o=[];for(var s=0;s<e;s++)o.push(a(r,i++).toString(16));return o.join("")}},606:(e,t,r)=>{"use strict";r.d(t,{i:()=>a});var n=r(908);a.on=o;var i=a.handlers={};function a(e,t,r,a){o(a||n.d,i,e,t,r)}function o(e,t,r,i,a){a||(a="feature"),e||(e=n.d);var o=t[a]=t[a]||{};(o[r]=o[r]||[]).push([e,i])}},607:(e,t,r)=>{"use strict";r.d(t,{W:()=>n});const n=(0,r(566).bz)()},614:(e,t,r)=>{"use strict";r.d(t,{BB:()=>o,H3:()=>n,g:()=>d,iL:()=>c,tS:()=>s,uh:()=>i,wk:()=>a});const n="NRBA",i="SESSION",a=144e5,o=18e5,s={STARTED:"session-started",PAUSE:"session-pause",RESET:"session-reset",RESUME:"session-resume",UPDATE:"session-update"},c={SAME_TAB:"same-tab",CROSS_TAB:"cross-tab"},d={OFF:0,FULL:1,ERROR:2}},630:(e,t,r)=>{"use strict";r.d(t,{T:()=>n});const n=r(860).K7.pageViewEvent},646:(e,t,r)=>{"use strict";r.d(t,{y:()=>n});class n{constructor(e){this.contextId=e}}},687:(e,t,r)=>{"use strict";r.d(t,{Ak:()=>d,Ze:()=>f,x3:()=>u});var n=r(241),i=r(836),a=r(606),o=r(860),s=r(646);const c={};function d(e,t){const r={staged:!1,priority:o.P3[t]||0};l(e),c[e].get(t)||c[e].set(t,r)}function u(e,t){e&&c[e]&&(c[e].get(t)&&c[e].delete(t),p(e,t,!1),c[e].size&&g(e))}function l(e){if(!e)throw new Error("agentIdentifier required");c[e]||(c[e]=new Map)}function f(e="",t="feature",r=!1){if(l(e),!e||!c[e].get(t)||r)return p(e,t);c[e].get(t).staged=!0,g(e)}function g(e){const t=Array.from(c[e]);t.every(([e,t])=>t.staged)&&(t.sort((e,t)=>e[1].priority-t[1].priority),t.forEach(([t])=>{c[e].delete(t),p(e,t)}))}function p(e,t,r=!0){const o=e?i.ee.get(e):i.ee,c=a.i.handlers;if(!o.aborted&&o.backlog&&c){if((0,n.W)({agentIdentifier:e,type:"lifecycle",name:"drain",feature:t}),r){const e=o.backlog[t],r=c[t];if(r){for(let t=0;e&&t<e.length;++t)h(e[t],r);Object.entries(r).forEach(([e,t])=>{Object.values(t||{}).forEach(t=>{t[0]?.on&&t[0]?.context()instanceof s.y&&t[0].on(e,t[1])})})}}o.isolatedBacklog||delete c[t],o.backlog[t]=null,o.emit("drain-"+t,[])}}function h(e,t){var r=e[1];Object.values(t[r]||{}).forEach(t=>{var r=e[0];if(t[0]===r){var n=t[1],i=e[3],a=e[2];n.apply(i,a)}})}},699:(e,t,r)=>{"use strict";r.d(t,{It:()=>a,KC:()=>s,No:()=>i,qh:()=>o});var n=r(860);const i=16e3,a=1e6,o="SESSION_ERROR",s={[n.K7.logging]:!0,[n.K7.genericEvents]:!1,[n.K7.jserrors]:!1,[n.K7.ajax]:!1}},701:(e,t,r)=>{"use strict";r.d(t,{B:()=>a,t:()=>o});var n=r(241);const i=new Set,a={};function o(e,t){const r=t.agentIdentifier;a[r]??={},e&&"object"==typeof e&&(i.has(r)||(t.ee.emit("rumresp",[e]),a[r]=e,i.add(r),(0,n.W)({agentIdentifier:r,loaded:!0,drained:!0,type:"lifecycle",name:"load",feature:void 0,data:e})))}},741:(e,t,r)=>{"use strict";r.d(t,{W:()=>a});var n=r(944),i=r(261);class a{#e(e,...t){if(this[e]!==a.prototype[e])return this[e](...t);(0,n.R)(35,e)}addPageAction(e,t){return this.#e(i.hG,e,t)}register(e){return this.#e(i.eY,e)}recordCustomEvent(e,t){return this.#e(i.fF,e,t)}setPageViewName(e,t){return this.#e(i.Fw,e,t)}setCustomAttribute(e,t,r){return this.#e(i.cD,e,t,r)}noticeError(e,t){return this.#e(i.o5,e,t)}setUserId(e){return this.#e(i.Dl,e)}setApplicationVersion(e){return this.#e(i.nb,e)}setErrorHandler(e){return this.#e(i.bt,e)}addRelease(e,t){return this.#e(i.k6,e,t)}log(e,t){return this.#e(i.$9,e,t)}start(){return this.#e(i.d3)}finished(e){return this.#e(i.BL,e)}recordReplay(){return this.#e(i.CH)}pauseReplay(){return this.#e(i.Tb)}addToTrace(e){return this.#e(i.U2,e)}setCurrentRouteName(e){return this.#e(i.PA,e)}interaction(e){return this.#e(i.dT,e)}wrapLogger(e,t,r){return this.#e(i.Wb,e,t,r)}measure(e,t){return this.#e(i.V1,e,t)}consent(e){return this.#e(i.Pv,e)}}},773:(e,t,r)=>{"use strict";r.d(t,{z_:()=>a,XG:()=>s,TZ:()=>n,rs:()=>i,xV:()=>o});r(154),r(566),r(384);const n=r(860).K7.metrics,i="sm",a="cm",o="storeSupportabilityMetrics",s="storeEventMetrics"},782:(e,t,r)=>{"use strict";r.d(t,{T:()=>n});const n=r(860).K7.pageViewTiming},836:(e,t,r)=>{"use strict";r.d(t,{P:()=>s,ee:()=>c});var n=r(384),i=r(990),a=r(646),o=r(607);const s="nr@context:".concat(o.W),c=function e(t,r){var n={},o={},u={},l=!1;try{l=16===r.length&&d.initializedAgents?.[r]?.runtime.isolatedBacklog}catch(e){}var f={on:p,addEventListener:p,removeEventListener:function(e,t){var r=n[e];if(!r)return;for(var i=0;i<r.length;i++)r[i]===t&&r.splice(i,1)},emit:function(e,r,n,i,a){!1!==a&&(a=!0);if(c.aborted&&!i)return;t&&a&&t.emit(e,r,n);var s=g(n);h(e).forEach(e=>{e.apply(s,r)});var d=v()[o[e]];d&&d.push([f,e,r,s]);return s},get:m,listeners:h,context:g,buffer:function(e,t){const r=v();if(t=t||"feature",f.aborted)return;Object.entries(e||{}).forEach(([e,n])=>{o[n]=t,t in r||(r[t]=[])})},abort:function(){f._aborted=!0,Object.keys(f.backlog).forEach(e=>{delete f.backlog[e]})},isBuffering:function(e){return!!v()[o[e]]},debugId:r,backlog:l?{}:t&&"object"==typeof t.backlog?t.backlog:{},isolatedBacklog:l};return Object.defineProperty(f,"aborted",{get:()=>{let e=f._aborted||!1;return e||(t&&(e=t.aborted),e)}}),f;function g(e){return e&&e instanceof a.y?e:e?(0,i.I)(e,s,()=>new a.y(s)):new a.y(s)}function p(e,t){n[e]=h(e).concat(t)}function h(e){return n[e]||[]}function m(t){return u[t]=u[t]||e(f,t)}function v(){return f.backlog}}(void 0,"globalEE"),d=(0,n.Zm)();d.ee||(d.ee=c)},843:(e,t,r)=>{"use strict";r.d(t,{u:()=>i});var n=r(878);function i(e,t=!1,r,i){(0,n.DD)("visibilitychange",function(){if(t)return void("hidden"===document.visibilityState&&e());e(document.visibilityState)},r,i)}},860:(e,t,r)=>{"use strict";r.d(t,{$J:()=>u,K7:()=>c,P3:()=>d,XX:()=>i,Yy:()=>s,df:()=>a,qY:()=>n,v4:()=>o});const n="events",i="jserrors",a="browser/blobs",o="rum",s="browser/logs",c={ajax:"ajax",genericEvents:"generic_events",jserrors:i,logging:"logging",metrics:"metrics",pageAction:"page_action",pageViewEvent:"page_view_event",pageViewTiming:"page_view_timing",sessionReplay:"session_replay",sessionTrace:"session_trace",softNav:"soft_navigations",spa:"spa"},d={[c.pageViewEvent]:1,[c.pageViewTiming]:2,[c.metrics]:3,[c.jserrors]:4,[c.spa]:5,[c.ajax]:6,[c.sessionTrace]:7,[c.softNav]:8,[c.sessionReplay]:9,[c.logging]:10,[c.genericEvents]:11},u={[c.pageViewEvent]:o,[c.pageViewTiming]:n,[c.ajax]:n,[c.spa]:n,[c.softNav]:n,[c.metrics]:i,[c.jserrors]:i,[c.sessionTrace]:a,[c.sessionReplay]:a,[c.logging]:s,[c.genericEvents]:"ins"}},863:(e,t,r)=>{"use strict";function n(){return Math.floor(performance.now())}r.d(t,{t:()=>n})},878:(e,t,r)=>{"use strict";function n(e,t){return{capture:e,passive:!1,signal:t}}function i(e,t,r=!1,i){window.addEventListener(e,t,n(r,i))}function a(e,t,r=!1,i){document.addEventListener(e,t,n(r,i))}r.d(t,{DD:()=>a,jT:()=>n,sp:()=>i})},908:(e,t,r)=>{"use strict";r.d(t,{d:()=>n,p:()=>i});var n=r(836).ee.get("handle");function i(e,t,r,i,a){a?(a.buffer([e],i),a.emit(e,t,r)):(n.buffer([e],i),n.emit(e,t,r))}},910:(e,t,r)=>{"use strict";r.d(t,{i:()=>a});var n=r(944);const i=new Map;function a(...e){return e.every(e=>{if(i.has(e))return i.get(e);const t="function"==typeof e&&e.toString().includes("[native code]");return t||(0,n.R)(64,e?.name||e?.toString()),i.set(e,t),t})}},944:(e,t,r)=>{"use strict";r.d(t,{R:()=>i});var n=r(241);function i(e,t){"function"==typeof console.debug&&(console.debug("New Relic Warning: https://github.com/newrelic/newrelic-browser-agent/blob/main/docs/warning-codes.md#".concat(e),t),(0,n.W)({agentIdentifier:null,drained:null,type:"data",name:"warn",feature:"warn",data:{code:e,secondary:t}}))}},990:(e,t,r)=>{"use strict";r.d(t,{I:()=>i});var n=Object.prototype.hasOwnProperty;function i(e,t,r){if(n.call(e,t))return e[t];var i=r();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,t,{value:i,writable:!0,enumerable:!1}),i}catch(e){}return e[t]=i,i}}},n={};function i(e){var t=n[e];if(void 0!==t)return t.exports;var a=n[e]={exports:{}};return r[e](a,a.exports,i),a.exports}i.m=r,i.d=(e,t)=>{for(var r in t)i.o(t,r)&&!i.o(e,r)&&Object.defineProperty(e,r,{enumerable:!0,get:t[r]})},i.f={},i.e=e=>Promise.all(Object.keys(i.f).reduce((t,r)=>(i.f[r](e,t),t),[])),i.u=e=>"nr-rum-1.303.0.min.js",i.o=(e,t)=>Object.prototype.hasOwnProperty.call(e,t),e={},t="NRBA-1.303.0.PROD:",i.l=(r,n,a,o)=>{if(e[r])e[r].push(n);else{var s,c;if(void 0!==a)for(var d=document.getElementsByTagName("script"),u=0;u<d.length;u++){var l=d[u];if(l.getAttribute("src")==r||l.getAttribute("data-webpack")==t+a){s=l;break}}if(!s){c=!0;var f={296:"sha512-DjFbtykbDCyUDGsp+l/dYhH0LhW/Jv9sDnc+aleTRmpV1ZRfyOeip4Sv4USz3Fk0DZCWshsM7d24cTr9Xf3L/A=="};(s=document.createElement("script")).charset="utf-8",i.nc&&s.setAttribute("nonce",i.nc),s.setAttribute("data-webpack",t+a),s.src=r,0!==s.src.indexOf(window.location.origin+"/")&&(s.crossOrigin="anonymous"),f[o]&&(s.integrity=f[o])}e[r]=[n];var g=(t,n)=>{s.onerror=s.onload=null,clearTimeout(p);var i=e[r];if(delete e[r],s.parentNode&&s.parentNode.removeChild(s),i&&i.forEach(e=>e(n)),t)return t(n)},p=setTimeout(g.bind(null,void 0,{type:"timeout",target:s}),12e4);s.onerror=g.bind(null,s.onerror),s.onload=g.bind(null,s.onload),c&&document.head.appendChild(s)}},i.r=e=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},i.p="https://js-agent.newrelic.com/",(()=>{var e={374:0,840:0};i.f.j=(t,r)=>{var n=i.o(e,t)?e[t]:void 0;if(0!==n)if(n)r.push(n[2]);else{var a=new Promise((r,i)=>n=e[t]=[r,i]);r.push(n[2]=a);var o=i.p+i.u(t),s=new Error;i.l(o,r=>{if(i.o(e,t)&&(0!==(n=e[t])&&(e[t]=void 0),n)){var a=r&&("load"===r.type?"missing":r.type),o=r&&r.target&&r.target.src;s.message="Loading chunk "+t+" failed.\n("+a+": "+o+")",s.name="ChunkLoadError",s.type=a,s.request=o,n[1](s)}},"chunk-"+t,t)}};var t=(t,r)=>{var n,a,[o,s,c]=r,d=0;if(o.some(t=>0!==e[t])){for(n in s)i.o(s,n)&&(i.m[n]=s[n]);if(c)c(i)}for(t&&t(r);d<o.length;d++)a=o[d],i.o(e,a)&&e[a]&&e[a][0](),e[a]=0},r=self["webpackChunk:NRBA-1.303.0.PROD"]=self["webpackChunk:NRBA-1.303.0.PROD"]||[];r.forEach(t.bind(null,0)),r.push=t.bind(null,r.push.bind(r))})(),(()=>{"use strict";i(374);var e=i(566),t=i(741);class r extends t.W{agentIdentifier=(0,e.LA)(16)}var n=i(860);const a=Object.values(n.K7);var o=i(163);var s=i(908),c=i(863),d=i(261),u=i(241),l=i(944),f=i(701),g=i(773);function p(e,t,i,a){const o=a||i;!o||o[e]&&o[e]!==r.prototype[e]||(o[e]=function(){(0,s.p)(g.xV,["API/"+e+"/called"],void 0,n.K7.metrics,i.ee),(0,u.W)({agentIdentifier:i.agentIdentifier,drained:!!f.B?.[i.agentIdentifier],type:"data",name:"api",feature:d.Pl+e,data:{}});try{return t.apply(this,arguments)}catch(e){(0,l.R)(23,e)}})}function h(e,t,r,n,i){const a=e.info;null===r?delete a.jsAttributes[t]:a.jsAttributes[t]=r,(i||null===r)&&(0,s.p)(d.Pl+n,[(0,c.t)(),t,r],void 0,"session",e.ee)}var m=i(687),v=i(234),b=i(289),y=i(154),_=i(384);const w=e=>y.RI&&!0===e?.privacy.cookies_enabled;function x(e){return!!(0,_.dV)().o.MO&&w(e)&&!0===e?.session_trace.enabled}var S=i(389),k=i(699);class R extends v.W{constructor(e,t){super(e.agentIdentifier,t),this.agentRef=e,this.abortHandler=void 0,this.featAggregate=void 0,this.loadedSuccessfully=void 0,this.onAggregateImported=new Promise(e=>{this.loadedSuccessfully=e}),this.deferred=Promise.resolve(),!1===e.init[this.featureName].autoStart?this.deferred=new Promise((t,r)=>{this.ee.on("manual-start-all",(0,S.J)(()=>{(0,m.Ak)(e.agentIdentifier,this.featureName),t()}))}):(0,m.Ak)(e.agentIdentifier,t)}importAggregator(e,t,r={}){if(this.featAggregate)return;const n=async()=>{let n;await this.deferred;try{if(w(e.init)){const{setupAgentSession:t}=await i.e(296).then(i.bind(i,305));n=t(e)}}catch(e){(0,l.R)(20,e),this.ee.emit("internal-error",[e]),(0,s.p)(k.qh,[e],void 0,this.featureName,this.ee)}try{if(!this.#t(this.featureName,n,e.init))return(0,m.Ze)(this.agentIdentifier,this.featureName),void this.loadedSuccessfully(!1);const{Aggregate:i}=await t();this.featAggregate=new i(e,r),e.runtime.harvester.initializedAggregates.push(this.featAggregate),this.loadedSuccessfully(!0)}catch(e){(0,l.R)(34,e),this.abortHandler?.(),(0,m.Ze)(this.agentIdentifier,this.featureName,!0),this.loadedSuccessfully(!1),this.ee&&this.ee.abort()}};y.RI?(0,b.GG)(()=>n(),!0):n()}#t(e,t,r){if(this.blocked)return!1;switch(e){case n.K7.sessionReplay:return x(r)&&!!t;case n.K7.sessionTrace:return!!t;default:return!0}}}var A=i(630),T=i(614);class E extends R{static featureName=A.T;constructor(e){var t;super(e,A.T),this.setupInspectionEvents(e.agentIdentifier),t=e,p(d.Fw,function(e,r){"string"==typeof e&&("/"!==e.charAt(0)&&(e="/"+e),t.runtime.customTransaction=(r||"http://custom.transaction")+e,(0,s.p)(d.Pl+d.Fw,[(0,c.t)()],void 0,void 0,t.ee))},t),this.importAggregator(e,()=>i.e(296).then(i.bind(i,108)))}setupInspectionEvents(e){const t=(t,r)=>{t&&(0,u.W)({agentIdentifier:e,timeStamp:t.timeStamp,loaded:"complete"===t.target.readyState,type:"window",name:r,data:t.target.location+""})};(0,b.sB)(e=>{t(e,"DOMContentLoaded")}),(0,b.GG)(e=>{t(e,"load")}),(0,b.Qr)(e=>{t(e,"navigate")}),this.ee.on(T.tS.UPDATE,(t,r)=>{(0,u.W)({agentIdentifier:e,type:"lifecycle",name:"session",data:r})})}}var N=i(843),j=i(878),I=i(782);class P extends R{static featureName=I.T;constructor(e){super(e,I.T),y.RI&&((0,N.u)(()=>(0,s.p)("docHidden",[(0,c.t)()],void 0,I.T,this.ee),!0),(0,j.sp)("pagehide",()=>(0,s.p)("winPagehide",[(0,c.t)()],void 0,I.T,this.ee)),this.importAggregator(e,()=>i.e(296).then(i.bind(i,350))))}}class O extends R{static featureName=g.TZ;constructor(e){super(e,g.TZ),y.RI&&document.addEventListener("securitypolicyviolation",e=>{(0,s.p)(g.xV,["Generic/CSPViolation/Detected"],void 0,this.featureName,this.ee)}),this.importAggregator(e,()=>i.e(296).then(i.bind(i,623)))}}new class extends r{constructor(e){var t;(super(),y.gm)?(this.features={},(0,_.bQ)(this.agentIdentifier,this),this.desiredFeatures=new Set(e.features||[]),this.desiredFeatures.add(E),this.runSoftNavOverSpa=[...this.desiredFeatures].some(e=>e.featureName===n.K7.softNav),(0,o.j)(this,e,e.loaderType||"agent"),t=this,p(d.cD,function(e,r,n=!1){if("string"==typeof e){if(["string","number","boolean"].includes(typeof r)||null===r)return h(t,e,r,d.cD,n);(0,l.R)(40,typeof r)}else(0,l.R)(39,typeof e)},t),function(e){p(d.Dl,function(t){if("string"==typeof t||null===t)return h(e,"enduser.id",t,d.Dl,!0);(0,l.R)(41,typeof t)},e)}(this),function(e){p(d.nb,function(t){if("string"==typeof t||null===t)return h(e,"application.version",t,d.nb,!1);(0,l.R)(42,typeof t)},e)}(this),function(e){p(d.d3,function(){e.ee.emit("manual-start-all")},e)}(this),function(e){p(d.Pv,function(t=!0){if("boolean"==typeof t){if((0,s.p)(d.Pl+d.Pv,[t],void 0,"session",e.ee),e.runtime.consented=t,t){const t=e.features.page_view_event;t.onAggregateImported.then(e=>{const r=t.featAggregate;e&&!r.sentRum&&r.sendRum()})}}else(0,l.R)(65,typeof t)},e)}(this),this.run()):(0,l.R)(21)}get config(){return{info:this.info,init:this.init,loader_config:this.loader_config,runtime:this.runtime}}get api(){return this}run(){try{const e=function(e){const t={};return a.forEach(r=>{t[r]=!!e[r]?.enabled}),t}(this.init),t=[...this.desiredFeatures];t.sort((e,t)=>n.P3[e.featureName]-n.P3[t.featureName]),t.forEach(t=>{if(!e[t.featureName]&&t.featureName!==n.K7.pageViewEvent)return;if(this.runSoftNavOverSpa&&t.featureName===n.K7.spa)return;if(!this.runSoftNavOverSpa&&t.featureName===n.K7.softNav)return;const r=function(e){switch(e){case n.K7.ajax:return[n.K7.jserrors];case n.K7.sessionTrace:return[n.K7.ajax,n.K7.pageViewEvent];case n.K7.sessionReplay:return[n.K7.sessionTrace];case n.K7.pageViewTiming:return[n.K7.pageViewEvent];default:return[]}}(t.featureName).filter(e=>!(e in this.features));r.length>0&&(0,l.R)(36,{targetFeature:t.featureName,missingDependencies:r}),this.features[t.featureName]=new t(this)})}catch(e){(0,l.R)(22,e);for(const e in this.features)this.features[e].abortHandler?.();const t=(0,_.Zm)();delete t.initializedAgents[this.agentIdentifier]?.features,delete this.sharedAggregator;return t.ee.get(this.agentIdentifier).abort(),!1}}}({features:[E,P,O],loaderType:"lite"})})()})();</script>
+
+	<title>Page not found - Association of Washington Business</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="searchMetaKeyword" content="" />
+	<link rel="shortcut icon" type="image/png" href="https://www.awb.org/wp-content/themes/awb/img/favicon.png">
+	<link rel="apple-touch-icon" href="https://www.awb.org/wp-content/themes/awb/img/favicon-76.png" sizes="76x76">
+	<link rel="apple-touch-icon" href="https://www.awb.org/wp-content/themes/awb/img/favicon-120.png" sizes="120x120">
+	<link rel="apple-touch-icon" href="https://www.awb.org/wp-content/themes/awb/img/favicon-152.png" sizes="152x152">
+
+	<meta name='robots' content='noindex, follow' />
+	<style>img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px }</style>
+	
+<!-- Google Tag Manager for WordPress by gtm4wp.com -->
+<script data-cfasync="false" data-pagespeed-no-defer>
+	var gtm4wp_datalayer_name = "dataLayer";
+	var dataLayer = dataLayer || [];
+</script>
+<!-- End Google Tag Manager for WordPress by gtm4wp.com -->
+	<!-- This site is optimized with the Yoast SEO plugin v26.3 - https://yoast.com/wordpress/plugins/seo/ -->
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:title" content="Page not found - Association of Washington Business" />
+	<meta property="og:site_name" content="Association of Washington Business" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.awb.org/#website","url":"https://www.awb.org/","name":"Association of Washington Business","description":"Washington state&#039;s business association","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.awb.org/?s={search_term_string}"},"query-input":{"@type":"PropertyValueSpecification","valueRequired":true,"valueName":"search_term_string"}}],"inLanguage":"en-US"}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel='dns-prefetch' href='//platform-api.sharethis.com' />
+<link rel='dns-prefetch' href='//ajax.googleapis.com' />
+<script type="text/javascript">
+/* <![CDATA[ */
+window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16.0.1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16.0.1\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.awb.org\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.8.3"}};
+/*! This file is auto-generated */
+!function(s,n){var o,i,e;function c(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(o,JSON.stringify(t))}catch(e){}}function p(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data),a=(e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0),new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data));return t.every(function(e,t){return e===a[t]})}function u(e,t){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);for(var n=e.getImageData(16,16,1,1),a=0;a<n.data.length;a++)if(0!==n.data[a])return!1;return!0}function f(e,t,n,a){switch(t){case"flag":return n(e,"\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!n(e,"\ud83c\udde8\ud83c\uddf6","\ud83c\udde8\u200b\ud83c\uddf6")&&!n(e,"\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!a(e,"\ud83e\udedf")}return!1}function g(e,t,n,a){var r="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):s.createElement("canvas"),o=r.getContext("2d",{willReadFrequently:!0}),i=(o.textBaseline="top",o.font="600 32px Arial",{});return e.forEach(function(e){i[e]=t(o,e,n,a)}),i}function t(e){var t=s.createElement("script");t.src=e,t.defer=!0,s.head.appendChild(t)}"undefined"!=typeof Promise&&(o="wpEmojiSettingsSupports",i=["flag","emoji"],n.supports={everything:!0,everythingExceptFlag:!0},e=new Promise(function(e){s.addEventListener("DOMContentLoaded",e,{once:!0})}),new Promise(function(t){var n=function(){try{var e=JSON.parse(sessionStorage.getItem(o));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+g.toString()+"("+[JSON.stringify(i),f.toString(),p.toString(),u.toString()].join(",")+"));",a=new Blob([e],{type:"text/javascript"}),r=new Worker(URL.createObjectURL(a),{name:"wpTestEmojiSupports"});return void(r.onmessage=function(e){c(n=e.data),r.terminate(),t(n)})}catch(e){}c(n=g(i,f,p,u))}t(n)}).then(function(e){for(var t in e)n.supports[t]=e[t],n.supports.everything=n.supports.everything&&n.supports[t],"flag"!==t&&(n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&n.supports[t]);n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&!n.supports.flag,n.DOMReady=!1,n.readyCallback=function(){n.DOMReady=!0}}).then(function(){return e}).then(function(){var e;n.supports.everything||(n.readyCallback(),(e=n.source||{}).concatemoji?t(e.concatemoji):e.wpemoji&&e.twemoji&&(t(e.twemoji),t(e.wpemoji)))}))}((window,document),window._wpemojiSettings);
+/* ]]> */
+</script>
+<link rel='stylesheet' id='tribe-events-pro-mini-calendar-block-styles-css' href='https://www.awb.org/wp-content/plugins/events-calendar-pro/build/css/tribe-events-pro-mini-calendar-block.css?ver=7.7.9' type='text/css' media='all' />
+<style id='wp-emoji-styles-inline-css' type='text/css'>
+
+	img.wp-smiley, img.emoji {
+		display: inline !important;
+		border: none !important;
+		box-shadow: none !important;
+		height: 1em !important;
+		width: 1em !important;
+		margin: 0 0.07em !important;
+		vertical-align: -0.1em !important;
+		background: none !important;
+		padding: 0 !important;
+	}
+</style>
+<style id='classic-theme-styles-inline-css' type='text/css'>
+/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+</style>
+<link rel='stylesheet' id='wpda_countdown_gutenberg_css-css' href='https://www.awb.org/wp-content/plugins/wpdevart-countdown-pro/includes/gutenberg/style.css?ver=6.8.3' type='text/css' media='all' />
+<style id='global-styles-inline-css' type='text/css'>
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}
+:root :where(.wp-block-pullquote){font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel='stylesheet' id='jquery-ui-styles-css' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css?ver=6.8.3' type='text/css' media='all' />
+<link rel='stylesheet' id='gearlab-tools-search-css' href='https://www.awb.org/wp-content/plugins/gearlab-tools-wordpress/css/gearlab-tools-search.css?ver=6.8.3' type='text/css' media='all' />
+<link rel='stylesheet' id='share-this-share-buttons-sticky-css' href='https://www.awb.org/wp-content/plugins/sharethis-share-buttons/css/mu-style.css?ver=1764343099' type='text/css' media='all' />
+<link rel='stylesheet' id='project-css-css' href='https://www.awb.org/wp-content/themes/awb/style.css?ver=1743003980197' type='text/css' media='all' />
+<link rel='stylesheet' id='project-print-css-css' href='https://www.awb.org/wp-content/themes/awb/print.css?ver=1743003980197' type='text/css' media='print' />
+<script type="text/javascript" src="https://www.awb.org/wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js"></script>
+<script type="text/javascript" src="https://www.awb.org/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" id="jquery-migrate-js"></script>
+<script type="text/javascript" src="//platform-api.sharethis.com/js/sharethis.js?ver=2.3.6#property=64ac6ff32e3f1d0019276a41&amp;product=inline-buttons&amp;source=sharethis-share-buttons-wordpress" id="share-this-share-buttons-mu-js"></script>
+<script type="text/javascript" src="https://www.awb.org/wp-content/themes/awb/js/modernizr/modernizr.custom.53630.js?ver=1743003980197" id="project-modernizr-js"></script>
+<link rel="https://api.w.org/" href="https://www.awb.org/wp-json/" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.awb.org/xmlrpc.php?rsd" />
+<meta name="generator" content="WordPress 6.8.3" />
+<meta name="tec-api-version" content="v1"><meta name="tec-api-origin" content="https://www.awb.org"><link rel="alternate" href="https://www.awb.org/wp-json/tribe/events/v1/" />
+<!-- Google Tag Manager for WordPress by gtm4wp.com -->
+<!-- GTM Container placement set to manual -->
+<script data-cfasync="false" data-pagespeed-no-defer type="text/javascript">
+	var dataLayer_content = {"pagePostType":"404-error"};
+	dataLayer.push( dataLayer_content );
+</script>
+<script data-cfasync="false" data-pagespeed-no-defer type="text/javascript">
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-W7VBS9S');
+</script>
+<!-- End Google Tag Manager for WordPress by gtm4wp.com -->		<style type="text/css" id="wp-custom-css">
+			.myDiv {
+  
+  width: 395px;
+	height: 300px;
+  display: inline-block;
+  background-color: orange;
+  margin-bottom: 25px;
+	margin-right:10px;
+	border-style: solid;
+	border-width: 2px;
+	border-color:black;
+	text-align:right;
+}
+
+/* The block of code below tells the browsers what to do on a screen that has a width of 320px or less */
+
+@media screen and (max-width: 200px) {
+  
+  .myDiv {
+  width: 90%;
+  display: block; /* Stops it from floating */
+  margin: 0 auto; /* Ensures that it is centered */
+  margin-bottom: 25px; /* Space between the stacked elements */
+    
+  }
+  
+}		</style>
+		
+
+	
+
+	<script>
+		(function (s, i, t, k, a) {
+			s.si = s.si || function () { (s.si.q = s.si.q || []).push(arguments) };
+			s._Settings = { id: 1004 };
+			k = i.getElementsByTagName('head')[0];
+			a = i.createElement('script'); a.async = 1;
+			a.src = t + s._Settings.id;
+			k.appendChild(a);
+		})(window, document, 'https://dashboard.sitkainsights.com/feedback/embed/?id=');
+	</script>
+</head>
+<body class="error404 wp-theme-awb tribe-no-js">
+    <a class="skip-to-content-link" href="#content">Skip to content</a>
+
+
+<!-- GTM Container placement set to manual -->
+<!-- Google Tag Manager (noscript) -->
+				<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W7VBS9S" height="0" width="0" style="display:none;visibility:hidden" aria-hidden="true"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div class="site-wrapper"><div class="site-pusher">
+
+			<header class="site-header" itemscope itemtype="http://schema.org/Organization">
+			<div class="site-header__inner">
+
+				<a class="logo" href="/" title="Association of Washington Business" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+					<img src="https://www.awb.org/wp-content/themes/awb/img/logo.png" srcset="https://www.awb.org/wp-content/themes/awb/img/logo.png, https://www.awb.org/wp-content/themes/awb/img/logo@2x.png 2x" alt="Association of Washington Business" />
+					<!-- Rich Snippet/schema.org markup about this Organization -->
+					<meta itemprop="url" content="https://www.awb.org/wp-content/themes/awb/img/logo.png">
+					<meta itemprop="name" content="Association of Washington Business">
+					<meta itemprop="url" content="https://www.awb.org">
+					<meta itemprop="description" content="Washington state&#039;s business association">
+				</a>
+
+				<a class="search-btn js-content-popup" href="#search-popup">
+					<svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
+  <path d="M646.696901,25.1034188 L640.872931,19.2844438 C643.641747,15.6472503 642.936163,10.4557157 639.295847,7.68927396 C635.655531,4.9228322 630.459541,5.6278114 627.690724,9.26500496 C624.921908,12.9021985 625.627492,18.0937331 629.267808,20.8601748 C632.230192,23.112365 636.333463,23.112365 639.295847,20.8601748 L645.119817,26.6791498 C645.558689,27.1069501 646.258029,27.1069501 646.696901,26.6791498 C647.109904,26.2477845 647.092064,25.5517178 646.696901,25.1034188 Z M628.291051,14.3023532 C628.291051,10.9797711 630.986722,8.28641184 634.312156,8.28641184 C637.63759,8.28641184 640.333261,10.9797711 640.333261,14.3023532 C640.333261,17.6249353 637.63759,20.3182945 634.312156,20.3182945 C630.988506,20.3147295 628.294619,17.6231528 628.291051,14.3023532 Z" transform="translate(-626 -6)"/>
+</svg>
+
+					<span>Search</span>
+				</a>
+				<a class="menu-btn">
+				    <div class="toggle"><span></span><span></span><span></span><span></span></div>
+				    <span>Menu</span>
+				</a>
+			</div>
+			<nav class="main-nav">
+    
+    <ul class="main-nav__menu" itemscope itemtype="http://schema.org/SiteNavigationElement">
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-770">
+
+                <a href="https://www.awb.org/about-us/" itemprop="url">
+                    <span itemprop="name">About Us</span>
+                </a>
+
+                                                    <ul class="main-nav__second">
+                                              <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-20756">
+                            <a href="https://www.awb.org/about-us/who-we-are/">Mission and Vision</a>
+
+                                                                                                
+                        </li>
+                                              <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-22921">
+                            <a href="https://www.awb.org/about-us/board-of-directors/">Board of Directors</a>
+
+                                                                                                
+                        </li>
+                                              <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-774">
+                            <a href="https://www.awb.org/about-us/awb-staff/">Staff</a>
+
+                                                                                                
+                        </li>
+                                              <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-20755">
+                            <a href="https://www.awb.org/membership/">Why Join?</a>
+
+                                                                                                
+                        </li>
+                                              <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-20757">
+                            <a href="https://www.awb.org/about-us/washingtons-manufacturing-association/">Washington’s Manufacturing Association</a>
+
+                                                                                                
+                        </li>
+                                              <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-771">
+                            <a href="https://www.awb.org/about-us/annual-report/">Annual Report</a>
+
+                                                                                                
+                        </li>
+                                          </ul>
+                                  
+            </li>
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-293">
+
+                <a href="https://www.awb.org/events/" itemprop="url">
+                    <span itemprop="name">Events</span>
+                </a>
+
+                                                    <ul class="main-nav__second">
+                                              <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-20765">
+                            <a href="https://www.awb.org/events/">Upcoming Events</a>
+
+                                                                                                
+                        </li>
+                                              <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-20768">
+                            <a href="https://www.awb.org/events/#past-events-on-demand-content-more">Past Events / On Demand</a>
+
+                                                                                                
+                        </li>
+                                              <li class="menu-item menu-item-type-post_type_archive menu-item-object-tribe_events menu-item-289">
+                            <a href="https://www.awb.org/events-calendar/">Events Calendar</a>
+
+                                                                                                
+                        </li>
+                                          </ul>
+                                  
+            </li>
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-has-children menu-item-16">
+
+                <a href="https://www.awb.org/news/" itemprop="url">
+                    <span itemprop="name">News</span>
+                </a>
+
+                                                    <ul class="main-nav__second">
+                                              <li class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-20764">
+                            <a href="https://www.awb.org/news/">AWB News</a>
+
+                                                                                                
+                        </li>
+                                              <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-20759">
+                            <a href="https://www.awb.org/category/awb/washington-business-magazine/">Washington Business Magazine</a>
+
+                                                                                                
+                        </li>
+                                              <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-20758">
+                            <a href="https://www.awb.org/category/press-release/">Press Release</a>
+
+                                                                                                
+                        </li>
+                                          </ul>
+                                  
+            </li>
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-779">
+
+                <a href="https://www.awb.org/government-affairs/" itemprop="url">
+                    <span itemprop="name">Government Affairs</span>
+                </a>
+
+                                                    <ul class="main-nav__second">
+                                              <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-20760">
+                            <a href="https://www.awb.org/about-us/awb-staff/#government-affairs">AWB Policy Team</a>
+
+                                                                                                
+                        </li>
+                                              <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-780">
+                            <a href="https://www.awb.org/government-affairs/legislative-objectives/">Legislative Objectives</a>
+
+                                                                                                
+                        </li>
+                                              <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-797">
+                            <a href="https://www.awb.org/government-affairs/committees-councils/">Committees &#038; Councils</a>
+
+                                                                                                
+                        </li>
+                                              <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-22322">
+                            <a href="https://www.awb.org/2025-candidate-endorsements/">2025 Candidate Endorsements</a>
+
+                                                                                                
+                        </li>
+                                              <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-20761">
+                            <a href="https://www.awb.org/awbs-2025-legislative-session-priorities/">AWB’s 2025 Legislative Session Priorities</a>
+
+                                                                                                
+                        </li>
+                                              <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-20763">
+                            <a href="https://www.awb.org/2025-issue-one-pagers/">2025 Issue Briefs</a>
+
+                                                                                                
+                        </li>
+                                          </ul>
+                                  
+            </li>
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-800">
+
+                <a href="https://www.awb.org/initiatives/" itemprop="url">
+                    <span itemprop="name">Initiatives</span>
+                </a>
+
+                                                    <ul class="main-nav__second">
+                                              <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-20769">
+                            <a href="https://www.awbinstitute.org/">AWB Institute</a>
+
+                                                                                                
+                        </li>
+                                              <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-20770">
+                            <a href="https://www.awb.org/initiatives/local-chamber-grassroots-alliance/">Grassroots Alliance</a>
+
+                                                                                                
+                        </li>
+                                              <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-20772">
+                            <a href="https://www.awb.org/initiatives/awards/">Awards</a>
+
+                                                                                                
+                        </li>
+                                              <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-20771">
+                            <a href="https://www.washingtonleap.org/">LEAP</a>
+
+                                                                                                
+                        </li>
+                                              <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-803">
+                            <a href="https://www.awb.org/initiatives/holiday-kids-tree-project/">Holiday Kids’ Tree Project</a>
+
+                                                                                                
+                        </li>
+                                              <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-20773">
+                            <a href="https://www.growherewashington.com/">Grow Here</a>
+
+                                                                                                
+                        </li>
+                                          </ul>
+                                  
+            </li>
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-807">
+
+                <a href="https://www.awb.org/reports-data/" itemprop="url">
+                    <span itemprop="name">Reports &#038; Data</span>
+                </a>
+
+                                                    <ul class="main-nav__second">
+                                              <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-22136">
+                            <a href="https://www.awb.org/wp-content/uploads/AWB_EMP_Survey_Fall25_111225.pdf">Washington Employers Survey</a>
+
+                                                                                                
+                        </li>
+                                              <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-20775">
+                            <a href="https://www.awb.org/wp-content/uploads/AWB_MFG_Survey_Sum25_082025.pdf">Washington Manufacturers Survey</a>
+
+                                                                                                
+                        </li>
+                                              <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-811">
+                            <a href="https://www.awb.org/reports-data/redbook/">Redbook</a>
+
+                                                                                                
+                        </li>
+                                              <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-20779">
+                            <a href="https://www.awb.org/wp-content/uploads/JUL_2025_EconomicReport_072525.pdf">Washington Business Outlook</a>
+
+                                                                                                
+                        </li>
+                                              <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-20778">
+                            <a href="https://www.awb.org/wp-content/uploads/AWBWorkforceTaskforceReport_082223.pdf">Workforce Taskforce Report</a>
+
+                                                                                                
+                        </li>
+                                              <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-20777">
+                            <a href="https://www.awb.org/reports-data/treatment-technology-review-and-assessment/">Treatment Technology Review and Assessment</a>
+
+                                                                                                
+                        </li>
+                                              <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-20776">
+                            <a href="https://www.awb.org/reports-data/manufacturing-and-technology-study/">Manufacturing and Technology Study</a>
+
+                                                                                                
+                        </li>
+                                              <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-809">
+                            <a href="https://www.awb.org/reports-data/infrastructure-report/">Infrastructure Report</a>
+
+                                                                                                
+                        </li>
+                                          </ul>
+                                  
+            </li>
+            </ul>
+
+	<div class="main-nav__utility">
+		<ul class="utility-items">
+							<li class="nav-item"><a href="https://www.awb.org/membership/">Membership</a></li>
+							<li class="nav-item"><a href="https://www.awb.org/membership/member-services/">Member Services</a></li>
+							<li class="nav-item"><a href="https://www.awb.org/contact-us/">Contact Us</a></li>
+			            				<li class="nav-item"><a class="" href="https://my.awb.org/account/login.aspx">Sign In</a></li>
+            		</ul>
+		<ul class="utility-social">
+							<li><a target="_blank" href="https://www.facebook.com/AssociationofWashingtonBusiness"><svg class="svg-fb" xmlns="http://www.w3.org/2000/svg" width="10" height="18" viewBox="0 0 10 18">
+  <defs>
+    <linearGradient id="icon-fb-a" x1="78.454%" x2="35.033%" y1="-15.697%" y2="100%">
+      <stop offset="0%" stop-color="#4AC9E3"/>
+      <stop offset="100%" stop-color="#2D68C4"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#icon-instagram-a)" fill-rule="evenodd" d="M2.90526479,17.9878448 L6.40398028,17.9878448 L6.40398028,9.78839273 L9.31015667,9.78839273 L9.75957479,6.59064961 L6.40398028,6.59064961 L6.40398028,4.53538938 C6.40398028,4.03193698 6.5270461,3.64420091 6.75221095,3.37304473 C6.97737581,3.12088675 7.40673876,2.98530866 8.06126657,2.98530866 L9.84161867,2.98530866 L9.84161867,0.135578091 C9.2281128,0.0388599623 8.3684753,2.20268248e-13 7.24356261,2.20268248e-13 C5.9335954,2.20268248e-13 4.86975981,0.36787431 4.09216619,1.10535004 C3.2945174,1.84109866 2.90526479,2.88772698 2.90526479,4.22537324 L2.90526479,6.59064961 L1.1812773e-13,6.59064961 L1.1812773e-13,9.78839273 L2.90526479,9.78839273 L2.90526479,17.9878448 Z"/>
+</svg>
+</a></li>
+										<li><a target="_blank" href="https://twitter.com/awbolympia"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="18" viewBox="0 0 1200 1227">
+  <defs>
+    <linearGradient id="icon-twitter-a" x1="145.055%" x2="0%" y1="8.166%" y2="81.839%">
+      <stop offset="0%" stop-color="#4AC9E3"/>
+      <stop offset="100%" stop-color="#2D68C4"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#icon-twitter-a)" fill-rule="evenodd" d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" transform="translate(-23 -1)"/>
+</svg>
+</a></li>
+										<li><a target="_blank" href="http://www.linkedin.com/company/association-of-washington-business"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
+  <defs>
+    <linearGradient id="icon-linkedin-a" x1="145.055%" x2="0%" y1="-8.963%" y2="94.875%">
+      <stop offset="0%" stop-color="#4AC9E3"/>
+      <stop offset="100%" stop-color="#2D68C4"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#icon-linkedin-a)" fill-rule="evenodd" d="M57.5432526,3.43456963 C57.8927336,3.81152321 58.3788927,4 58.9610727,4 L58.9809689,4 C59.6020761,4 60.0873702,3.81152321 60.4558824,3.43456963 C60.8252595,3.03615582 61,2.57522743 61,1.98926989 C61,1.42383951 60.8053633,0.942383951 60.4558824,0.565430371 C60.1064014,0.18847679 59.6211073,0 59.0190311,0 C58.416955,0 57.9316609,0.18847679 57.5631488,0.565430371 C57.1937716,0.942383951 57,1.42383951 57,1.98926989 C57,2.57522743 57.1747405,3.03615582 57.5432526,3.43456963 L57.5432526,3.43456963 Z M57,18 L61,18 L61,5 L57,5 L57,18 Z M67.2563818,18 L67.2563818,10.9126321 C67.2563818,10.4759502 67.3027588,10.1304999 67.3955129,9.87730642 C67.5799905,9.44062451 67.8582527,9.07262261 68.2282385,8.77330074 C68.5745204,8.47397887 69.0372602,8.33559375 69.5927541,8.33559375 C70.3327255,8.33559375 70.8645156,8.58878726 71.2118281,9.09517426 C71.5591406,9.60156127 71.7436182,10.3150134 71.7436182,11.211954 L71.7436182,18 L76,18 L76,10.7291437 C76,8.84198076 75.560964,7.41610156 74.6591882,6.44945592 C73.7563818,5.48281028 72.5763437,5 71.0964008,5 C70.5646107,5 70.0554939,5.06868002 69.6154273,5.20706513 C69.1763913,5.32187352 68.8064056,5.50638701 68.4827969,5.75855543 C68.1818614,5.98919729 67.9499762,6.21881407 67.7654987,6.42690427 C67.5799905,6.63294433 67.3955129,6.86358619 67.232678,7.13933134 L67.2563818,7.13933134 L67.2563818,5.29932187 L63,5.29932187 L63.0226732,5.92051727 L63.0226732,9.71636966 C63.0226732,11.8331493 63.0226732,14.5947012 63,18 L67.2563818,18 L67.2563818,18 Z" transform="translate(-57)"/>
+</svg>
+</a></li>
+										<li><a target="_blank" href="https://www.instagram.com/awbolympia/"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+  <defs>
+    <linearGradient id="icon-instagram-a" x1="145.055%" x2="0%" y1="-15.697%" y2="100%">
+      <stop offset="0%" stop-color="#4AC9E3"/>
+      <stop offset="100%" stop-color="#2D68C4"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#icon-instagram-a)" d="M12.833184,0 C15.6866212,0 18,2.32583791 18,5.19432818 L18,12.8056718 C18,15.6745331 15.6869854,18 12.833184,18 L5.16681598,18 C2.31337883,18 0,15.6741621 0,12.8056718 L0,5.19432818 C0,2.3254669 2.31301459,0 5.16681598,0 L12.833184,0 Z M12.833184,1.67553191 L5.16681598,1.67553191 C3.23351309,1.67553191 1.66666667,3.25081359 1.66666667,5.19432818 L1.66666667,12.8056718 C1.66666667,14.7488162 3.2338781,16.3244681 5.16681598,16.3244681 L12.833184,16.3244681 C14.7664869,16.3244681 16.3333333,14.7491864 16.3333333,12.8056718 L16.3333333,5.19432818 C16.3333333,3.25118382 14.7661219,1.67553191 12.833184,1.67553191 Z M9,4.34482759 C11.5709807,4.34482759 13.6551724,6.42901927 13.6551724,9 C13.6551724,11.5709807 11.5709807,13.6551724 9,13.6551724 C6.42901927,13.6551724 4.34482759,11.5709807 4.34482759,9 C4.34482759,6.42901927 6.42901927,4.34482759 9,4.34482759 Z M9,5.98232542 C7.33338435,5.98232542 5.98232542,7.33338435 5.98232542,9 C5.98232542,10.6666157 7.33338435,12.0176746 9,12.0176746 C10.6666157,12.0176746 12.0176746,10.6666157 12.0176746,9 C12.0176746,7.33338435 10.6666157,5.98232542 9,5.98232542 Z M13.6551724,3.10344828 C14.3407673,3.10344828 14.8965517,3.65923272 14.8965517,4.34482759 C14.8965517,5.03042245 14.3407673,5.5862069 13.6551724,5.5862069 C12.9695776,5.5862069 12.4137931,5.03042245 12.4137931,4.34482759 C12.4137931,3.65923272 12.9695776,3.10344828 13.6551724,3.10344828 Z"/>
+</svg>
+</a></li>
+										<li><a target="_blank" href="https://vimeo.com/associationwabusiness"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" viewBox="0 0 20 18">
+  <defs>
+    <linearGradient id="icon-vimeo-a" x1="115.587%" x2="25.757%" y1="4.498%" y2="83.008%">
+      <stop offset="0%" stop-color="#4AC9E3"/>
+      <stop offset="100%" stop-color="#2D68C4"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#icon-vimeo-a)" d="M158.060845,9.09549935 C156.025844,13.443002 151.113341,19.361339 148.008339,19.361339 C144.948337,19.361339 144.505837,12.8355016 142.835002,8.49216564 C142.012502,6.35466433 141.481668,6.84549796 139.940001,7.92466529 L139,6.71216455 C141.248335,4.73549666 143.498336,2.43966192 144.880837,2.31216184 C146.437505,2.16299508 147.395839,3.2271624 147.754172,5.50549714 C148.227506,8.49966565 148.889173,13.1471685 150.044173,13.1471685 C150.944174,13.1471685 153.161675,9.46049957 153.275842,8.14216543 C153.478342,6.21216424 151.856675,6.15383087 150.449174,6.75633124 C152.676675,-0.538673249 161.943347,0.804660911 158.060845,9.09549935 Z" transform="translate(-139 -2)"/>
+</svg>
+</a></li>
+					</ul>
+	</div>
+</nav>
+		</header>
+	
+	<main class="site-main" id="content">
+		<section class="pattern outer-gutter">
+  <div class="container">
+
+
+		<h1>404 Page Not Found</h1>
+		<p>The page you were looking for could not be found.</p>
+
+
+	</div>
+</section>
+	</main>
+
+			<footer class="site-footer">
+			<div class="site-footer__top">
+				<div class="container">
+					<div class="flex-row footer-structure-flex">
+						<div class="col-lg-4 col-md-5 col-sm-12 col-xs-12">
+							<div class="footer-contact">
+								<img class="footer-logo" src="https://www.awb.org/wp-content/themes/awb/img/logo-white.png" srcset="https://www.awb.org/wp-content/themes/awb/img/logo-white.png, https://www.awb.org/wp-content/themes/awb/img/logo-white@2x.png 2x" alt="Association of Washington Business" />
+								<div class="rtecontent">
+									<p>1414 Cherry St. SE Olympia, WA 98501<br />
+(360) 943-1600<br />
+<a href="/cdn-cgi/l/email-protection#ea878f87888f9899aa8b9d88c485988d"><span class="__cf_email__" data-cfemail="2a474f47484f58596a4b5d480445584d">[email&#160;protected]</span></a></p>
+
+																			<p><a class="" href="https://www.awb.org/privacy-policy/">Privacy Policy</a></p>
+																	</div>
+								
+							</div>
+						</div>
+						<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+							<div class="footer-menu">
+								<ul>
+																			<li><a href="https://www.awb.org/about-us/">About Us</a></li>
+																			<li><a href="https://www.awb.org/events/">Events</a></li>
+																			<li><a href="https://www.awb.org/news/">News</a></li>
+																			<li><a href="https://www.awb.org/government-affairs/">Government Affairs</a></li>
+																			<li><a href="https://www.awb.org/initiatives/">Initiatives</a></li>
+																			<li><a href="https://www.awb.org/reports-data/">Reports &#038; Data</a></li>
+																												<li><a href="https://www.awb.org/membership/">Membership</a></li>
+																			<li><a href="https://www.awb.org/membership/member-services/">Member Services</a></li>
+																			<li><a href="https://www.awb.org/contact-us/">Contact Us</a></li>
+																	</ul>
+							</div>
+							<div class="footer-form">
+								<h6 class="label">Sign Up for Fast Facts</h6>
+								
+                <div class='gf_browser_unknown gform_wrapper gform_legacy_markup_wrapper gform-theme--no-framework email-signup-form_wrapper' data-form-theme='legacy' data-form-index='0' id='gform_wrapper_3' ><div id='gf_3' class='gform_anchor' tabindex='-1'></div><form method='post' enctype='multipart/form-data' target='gform_ajax_frame_3' id='gform_3' class='email-signup-form' action='/wp-content/uploads/2018/05/SAMPLE-AT-WILL-EMPLOYMENT-OFFER-LETTER.pdf#gf_3' data-formid='3' novalidate>
+                        <div class='gform-body gform_body'><ul id='gform_fields_3' class='gform_fields top_label form_sublabel_below description_below validation_below'><li id="field_3_5" class="gfield gfield--type-honeypot gform_validation_container field_sublabel_below gfield--has-description field_description_below field_validation_below gfield_visibility_visible"  ><label class='gfield_label gform-field-label' for='input_3_5'>Facebook</label><div class='ginput_container'><input name='input_5' id='input_3_5' type='text' value='' autocomplete='new-password'/></div><div class='gfield_description' id='gfield_description_3_5'>This field is for validation purposes and should be left unchanged.</div></li><li id="field_3_1" class="gfield gfield--type-text col-lg-3 col-xs-12 field_sublabel_below gfield--no-description field_description_below hidden_label field_validation_below gfield_visibility_visible"  ><label class='gfield_label gform-field-label' for='input_3_1'>First Name</label><div class='ginput_container ginput_container_text'><input name='input_1' id='input_3_1' type='text' value='' class='medium'    placeholder='First Name'  aria-invalid="false"   /></div></li><li id="field_3_2" class="gfield gfield--type-text col-lg-3 col-xs-12 field_sublabel_below gfield--no-description field_description_below hidden_label field_validation_below gfield_visibility_visible"  ><label class='gfield_label gform-field-label' for='input_3_2'>Last Name</label><div class='ginput_container ginput_container_text'><input name='input_2' id='input_3_2' type='text' value='' class='medium'    placeholder='Last Name'  aria-invalid="false"   /></div></li><li id="field_3_3" class="gfield gfield--type-email col-lg-6 col-xs-12 gfield_contains_required field_sublabel_below gfield--no-description field_description_below hidden_label field_validation_below gfield_visibility_visible"  ><label class='gfield_label gform-field-label' for='input_3_3'>Email Address<span class="gfield_required"><span class="gfield_required gfield_required_asterisk">*</span></span></label><div class='ginput_container ginput_container_email'>
+                            <input name='input_3' id='input_3_3' type='email' value='' class='medium'   placeholder='Email Address' aria-required="true" aria-invalid="false"  />
+                        </div></li><li id="field_3_4" class="gfield gfield--type-captcha empty-row-recaptcha field_sublabel_below gfield--no-description field_description_below hidden_label field_validation_below gfield_visibility_visible"  ><label class='gfield_label gform-field-label' for='input_3_4'>CAPTCHA</label><div id='input_3_4' class='ginput_container ginput_recaptcha' data-sitekey='6Le3accZAAAAAMMeKY-mDHZrpXxJN2JucimQuFsx'  data-theme='light' data-tabindex='-1' data-size='invisible' data-badge='bottomright'></div></li></ul></div>
+        <div class='gform-footer gform_footer top_label'> <div class='gform-btn-wrap'><input type='submit' id='gform_submit_button_3' class='gform_button button' onclick='gform.submission.handleButtonClick(this);' data-submission-type='submit' value='Submit'  /></div> <input type='hidden' name='gform_ajax' value='form_id=3&amp;title=&amp;description=&amp;tabindex=0&amp;theme=legacy&amp;styles=[]&amp;hash=883afcecf64568341c1f4160a492041a' />
+            <input type='hidden' class='gform_hidden' name='gform_submission_method' data-js='gform_submission_method_3' value='iframe' />
+            <input type='hidden' class='gform_hidden' name='gform_theme' data-js='gform_theme_3' id='gform_theme_3' value='legacy' />
+            <input type='hidden' class='gform_hidden' name='gform_style_settings' data-js='gform_style_settings_3' id='gform_style_settings_3' value='[]' />
+            <input type='hidden' class='gform_hidden' name='is_submit_3' value='1' />
+            <input type='hidden' class='gform_hidden' name='gform_submit' value='3' />
+            
+            <input type='hidden' class='gform_hidden' name='gform_unique_id' value='' />
+            <input type='hidden' class='gform_hidden' name='state_3' value='WyJbXSIsIjIzNDJjZDJmZTA1YTM1YmI1NjAyMDVmN2M1YWIwMmUxIl0=' />
+            <input type='hidden' autocomplete='off' class='gform_hidden' name='gform_target_page_number_3' id='gform_target_page_number_3' value='0' />
+            <input type='hidden' autocomplete='off' class='gform_hidden' name='gform_source_page_number_3' id='gform_source_page_number_3' value='1' />
+            <input type='hidden' name='gform_field_values' value='' />
+            
+        </div>
+                        <p style="display: none !important;" class="akismet-fields-container" data-prefix="ak_"><label>&#916;<textarea name="ak_hp_textarea" cols="45" rows="8" maxlength="100"></textarea></label><input type="hidden" id="ak_js_1" name="ak_js" value="208"/><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.getElementById( "ak_js_1" ).setAttribute( "value", ( new Date() ).getTime() );</script></p></form>
+                        </div>
+		                <iframe style='display:none;width:0px;height:0px;' src='about:blank' name='gform_ajax_frame_3' id='gform_ajax_frame_3' title='This iframe contains the logic required to handle Ajax powered Gravity Forms.'></iframe>
+		                <script type="text/javascript">
+/* <![CDATA[ */
+ gform.initializeOnLoaded( function() {gformInitSpinner( 3, 'https://www.awb.org/wp-content/themes/awb/img/animated-spinner.svg', true );jQuery('#gform_ajax_frame_3').on('load',function(){var contents = jQuery(this).contents().find('*').html();var is_postback = contents.indexOf('GF_AJAX_POSTBACK') >= 0;if(!is_postback){return;}var form_content = jQuery(this).contents().find('#gform_wrapper_3');var is_confirmation = jQuery(this).contents().find('#gform_confirmation_wrapper_3').length > 0;var is_redirect = contents.indexOf('gformRedirect(){') >= 0;var is_form = form_content.length > 0 && ! is_redirect && ! is_confirmation;var mt = parseInt(jQuery('html').css('margin-top'), 10) + parseInt(jQuery('body').css('margin-top'), 10) + 100;if(is_form){jQuery('#gform_wrapper_3').html(form_content.html());if(form_content.hasClass('gform_validation_error')){jQuery('#gform_wrapper_3').addClass('gform_validation_error');} else {jQuery('#gform_wrapper_3').removeClass('gform_validation_error');}setTimeout( function() { /* delay the scroll by 50 milliseconds to fix a bug in chrome */ jQuery(document).scrollTop(jQuery('#gform_wrapper_3').offset().top - mt); }, 50 );if(window['gformInitDatepicker']) {gformInitDatepicker();}if(window['gformInitPriceFields']) {gformInitPriceFields();}var current_page = jQuery('#gform_source_page_number_3').val();gformInitSpinner( 3, 'https://www.awb.org/wp-content/themes/awb/img/animated-spinner.svg', true );jQuery(document).trigger('gform_page_loaded', [3, current_page]);window['gf_submitting_3'] = false;}else if(!is_redirect){var confirmation_content = jQuery(this).contents().find('.GF_AJAX_POSTBACK').html();if(!confirmation_content){confirmation_content = contents;}jQuery('#gform_wrapper_3').replaceWith(confirmation_content);jQuery(document).scrollTop(jQuery('#gf_3').offset().top - mt);jQuery(document).trigger('gform_confirmation_loaded', [3]);window['gf_submitting_3'] = false;wp.a11y.speak(jQuery('#gform_confirmation_message_3').text());}else{jQuery('#gform_3').append(contents);if(window['gformRedirect']) {gformRedirect();}}jQuery(document).trigger("gform_pre_post_render", [{ formId: "3", currentPage: "current_page", abort: function() { this.preventDefault(); } }]);        if (event && event.defaultPrevented) {                return;        }        const gformWrapperDiv = document.getElementById( "gform_wrapper_3" );        if ( gformWrapperDiv ) {            const visibilitySpan = document.createElement( "span" );            visibilitySpan.id = "gform_visibility_test_3";            gformWrapperDiv.insertAdjacentElement( "afterend", visibilitySpan );        }        const visibilityTestDiv = document.getElementById( "gform_visibility_test_3" );        let postRenderFired = false;        function triggerPostRender() {            if ( postRenderFired ) {                return;            }            postRenderFired = true;            gform.core.triggerPostRenderEvents( 3, current_page );            if ( visibilityTestDiv ) {                visibilityTestDiv.parentNode.removeChild( visibilityTestDiv );            }        }        function debounce( func, wait, immediate ) {            var timeout;            return function() {                var context = this, args = arguments;                var later = function() {                    timeout = null;                    if ( !immediate ) func.apply( context, args );                };                var callNow = immediate && !timeout;                clearTimeout( timeout );                timeout = setTimeout( later, wait );                if ( callNow ) func.apply( context, args );            };        }        const debouncedTriggerPostRender = debounce( function() {            triggerPostRender();        }, 200 );        if ( visibilityTestDiv && visibilityTestDiv.offsetParent === null ) {            const observer = new MutationObserver( ( mutations ) => {                mutations.forEach( ( mutation ) => {                    if ( mutation.type === 'attributes' && visibilityTestDiv.offsetParent !== null ) {                        debouncedTriggerPostRender();                        observer.disconnect();                    }                });            });            observer.observe( document.body, {                attributes: true,                childList: false,                subtree: true,                attributeFilter: [ 'style', 'class' ],            });        } else {            triggerPostRender();        }    } );} ); 
+/* ]]> */
+</script>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="site-footer__bottom">
+				<div class="container">
+
+					<div class="flex-row footer-structure-flex middle-lg">
+						<div class="col-lg-4 col-mdl-12 col-md-12 col-sm-12 col-xs-12">
+							<div class="footer-social">
+																	<a href="https://www.facebook.com/AssociationofWashingtonBusiness"><svg class="svg-fb" xmlns="http://www.w3.org/2000/svg" width="10" height="18" viewBox="0 0 10 18">
+  <defs>
+    <linearGradient id="icon-fb-a" x1="78.454%" x2="35.033%" y1="-15.697%" y2="100%">
+      <stop offset="0%" stop-color="#4AC9E3"/>
+      <stop offset="100%" stop-color="#2D68C4"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#icon-instagram-a)" fill-rule="evenodd" d="M2.90526479,17.9878448 L6.40398028,17.9878448 L6.40398028,9.78839273 L9.31015667,9.78839273 L9.75957479,6.59064961 L6.40398028,6.59064961 L6.40398028,4.53538938 C6.40398028,4.03193698 6.5270461,3.64420091 6.75221095,3.37304473 C6.97737581,3.12088675 7.40673876,2.98530866 8.06126657,2.98530866 L9.84161867,2.98530866 L9.84161867,0.135578091 C9.2281128,0.0388599623 8.3684753,2.20268248e-13 7.24356261,2.20268248e-13 C5.9335954,2.20268248e-13 4.86975981,0.36787431 4.09216619,1.10535004 C3.2945174,1.84109866 2.90526479,2.88772698 2.90526479,4.22537324 L2.90526479,6.59064961 L1.1812773e-13,6.59064961 L1.1812773e-13,9.78839273 L2.90526479,9.78839273 L2.90526479,17.9878448 Z"/>
+</svg>
+</a>
+																									<a href="https://twitter.com/awbolympia"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="18" viewBox="0 0 1200 1227">
+  <defs>
+    <linearGradient id="icon-twitter-a" x1="145.055%" x2="0%" y1="8.166%" y2="81.839%">
+      <stop offset="0%" stop-color="#4AC9E3"/>
+      <stop offset="100%" stop-color="#2D68C4"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#icon-twitter-a)" fill-rule="evenodd" d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" transform="translate(-23 -1)"/>
+</svg>
+</a>
+																									<a href="http://www.linkedin.com/company/association-of-washington-business"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
+  <defs>
+    <linearGradient id="icon-linkedin-a" x1="145.055%" x2="0%" y1="-8.963%" y2="94.875%">
+      <stop offset="0%" stop-color="#4AC9E3"/>
+      <stop offset="100%" stop-color="#2D68C4"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#icon-linkedin-a)" fill-rule="evenodd" d="M57.5432526,3.43456963 C57.8927336,3.81152321 58.3788927,4 58.9610727,4 L58.9809689,4 C59.6020761,4 60.0873702,3.81152321 60.4558824,3.43456963 C60.8252595,3.03615582 61,2.57522743 61,1.98926989 C61,1.42383951 60.8053633,0.942383951 60.4558824,0.565430371 C60.1064014,0.18847679 59.6211073,0 59.0190311,0 C58.416955,0 57.9316609,0.18847679 57.5631488,0.565430371 C57.1937716,0.942383951 57,1.42383951 57,1.98926989 C57,2.57522743 57.1747405,3.03615582 57.5432526,3.43456963 L57.5432526,3.43456963 Z M57,18 L61,18 L61,5 L57,5 L57,18 Z M67.2563818,18 L67.2563818,10.9126321 C67.2563818,10.4759502 67.3027588,10.1304999 67.3955129,9.87730642 C67.5799905,9.44062451 67.8582527,9.07262261 68.2282385,8.77330074 C68.5745204,8.47397887 69.0372602,8.33559375 69.5927541,8.33559375 C70.3327255,8.33559375 70.8645156,8.58878726 71.2118281,9.09517426 C71.5591406,9.60156127 71.7436182,10.3150134 71.7436182,11.211954 L71.7436182,18 L76,18 L76,10.7291437 C76,8.84198076 75.560964,7.41610156 74.6591882,6.44945592 C73.7563818,5.48281028 72.5763437,5 71.0964008,5 C70.5646107,5 70.0554939,5.06868002 69.6154273,5.20706513 C69.1763913,5.32187352 68.8064056,5.50638701 68.4827969,5.75855543 C68.1818614,5.98919729 67.9499762,6.21881407 67.7654987,6.42690427 C67.5799905,6.63294433 67.3955129,6.86358619 67.232678,7.13933134 L67.2563818,7.13933134 L67.2563818,5.29932187 L63,5.29932187 L63.0226732,5.92051727 L63.0226732,9.71636966 C63.0226732,11.8331493 63.0226732,14.5947012 63,18 L67.2563818,18 L67.2563818,18 Z" transform="translate(-57)"/>
+</svg>
+</a>
+																									<a href="https://www.instagram.com/awbolympia/"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+  <defs>
+    <linearGradient id="icon-instagram-a" x1="145.055%" x2="0%" y1="-15.697%" y2="100%">
+      <stop offset="0%" stop-color="#4AC9E3"/>
+      <stop offset="100%" stop-color="#2D68C4"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#icon-instagram-a)" d="M12.833184,0 C15.6866212,0 18,2.32583791 18,5.19432818 L18,12.8056718 C18,15.6745331 15.6869854,18 12.833184,18 L5.16681598,18 C2.31337883,18 0,15.6741621 0,12.8056718 L0,5.19432818 C0,2.3254669 2.31301459,0 5.16681598,0 L12.833184,0 Z M12.833184,1.67553191 L5.16681598,1.67553191 C3.23351309,1.67553191 1.66666667,3.25081359 1.66666667,5.19432818 L1.66666667,12.8056718 C1.66666667,14.7488162 3.2338781,16.3244681 5.16681598,16.3244681 L12.833184,16.3244681 C14.7664869,16.3244681 16.3333333,14.7491864 16.3333333,12.8056718 L16.3333333,5.19432818 C16.3333333,3.25118382 14.7661219,1.67553191 12.833184,1.67553191 Z M9,4.34482759 C11.5709807,4.34482759 13.6551724,6.42901927 13.6551724,9 C13.6551724,11.5709807 11.5709807,13.6551724 9,13.6551724 C6.42901927,13.6551724 4.34482759,11.5709807 4.34482759,9 C4.34482759,6.42901927 6.42901927,4.34482759 9,4.34482759 Z M9,5.98232542 C7.33338435,5.98232542 5.98232542,7.33338435 5.98232542,9 C5.98232542,10.6666157 7.33338435,12.0176746 9,12.0176746 C10.6666157,12.0176746 12.0176746,10.6666157 12.0176746,9 C12.0176746,7.33338435 10.6666157,5.98232542 9,5.98232542 Z M13.6551724,3.10344828 C14.3407673,3.10344828 14.8965517,3.65923272 14.8965517,4.34482759 C14.8965517,5.03042245 14.3407673,5.5862069 13.6551724,5.5862069 C12.9695776,5.5862069 12.4137931,5.03042245 12.4137931,4.34482759 C12.4137931,3.65923272 12.9695776,3.10344828 13.6551724,3.10344828 Z"/>
+</svg>
+</a>
+																									<a href="https://vimeo.com/associationwabusiness"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" viewBox="0 0 20 18">
+  <defs>
+    <linearGradient id="icon-vimeo-a" x1="115.587%" x2="25.757%" y1="4.498%" y2="83.008%">
+      <stop offset="0%" stop-color="#4AC9E3"/>
+      <stop offset="100%" stop-color="#2D68C4"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#icon-vimeo-a)" d="M158.060845,9.09549935 C156.025844,13.443002 151.113341,19.361339 148.008339,19.361339 C144.948337,19.361339 144.505837,12.8355016 142.835002,8.49216564 C142.012502,6.35466433 141.481668,6.84549796 139.940001,7.92466529 L139,6.71216455 C141.248335,4.73549666 143.498336,2.43966192 144.880837,2.31216184 C146.437505,2.16299508 147.395839,3.2271624 147.754172,5.50549714 C148.227506,8.49966565 148.889173,13.1471685 150.044173,13.1471685 C150.944174,13.1471685 153.161675,9.46049957 153.275842,8.14216543 C153.478342,6.21216424 151.856675,6.15383087 150.449174,6.75633124 C152.676675,-0.538673249 161.943347,0.804660911 158.060845,9.09549935 Z" transform="translate(-139 -2)"/>
+</svg>
+</a>
+															</div>
+						</div>
+						<div class="col-lg-8 col-mdl-12 col-md-12 col-sm-12 col-xs-12">
+							<div class="flex-row middle-lg">
+								<div class="col-lg">
+									<div class="footer-copy">
+										<span>&copy; 2025 Association of Washington Business, All Rights Reserved.</span>
+										<span><a class="no-hover" href="https://www.sitecrafting.com" target="_blank">Website Design and Development by SiteCrafting</a></span>
+									</div>
+								</div>
+																	<div class="col-lg-4 col-mdl-12 col-md-12 col-sm-12 col-xs-12">
+										
+
+
+<div class="footer-logos">
+								<span class="logo">		<img 
+		src="https://www.awb.org/wp-content/uploads/logo-chamber-of-the-year-152x54.png" 
+		srcset="https://www.awb.org/wp-content/uploads/logo-chamber-of-the-year-152x54.png, https://www.awb.org/wp-content/uploads/logo-chamber-of-the-year-152x54@2x.png 2x"
+		alt="Home 6" 
+	/>
+</span>
+												<span class="logo">		<img 
+		src="https://www.awb.org/wp-content/uploads/accredidation_logo2-109x54.png" 
+		srcset="https://www.awb.org/wp-content/uploads/accredidation_logo2-109x54.png, https://www.awb.org/wp-content/uploads/accredidation_logo2-109x54@2x.png 2x"
+		alt="Home 7" 
+	/>
+</span>
+				</div>									</div>
+															</div>
+						</div>
+					</div><!-- //.flex-row -->
+
+					
+				</div>
+			</div><!-- //.site-footer__bottom -->
+		</footer>
+	
+</div></div><!-- //.site-pusher //.site-wrapper -->
+
+<div id="login-popup" class="popup-window mx950 mfp-hide">
+	<a class="close-btn"><svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 18 19">
+  <title>Close</title>
+  <g fill="none" fill-rule="evenodd" stroke="#2D68C4" stroke-linecap="round" stroke-width="3" transform="translate(0 1.075)">
+    <line x1="-1.5" x2="19.5" y1="8.425" y2="8.425" transform="rotate(-45 9 8.425)"/>
+    <line x1="1.575" x2="16.425" y1="1" y2="15.849"/>
+  </g>
+</svg>
+</a>
+
+	
+	
+<h2 class="section-headline section-headline--small h3 section-headline--bug">
+AWB
+</h2>
+	<div class="tabs-simple">
+				<input type="radio" id="tab-1" name="login-tabs" checked>
+		<label for="tab-1">Sign In</label>
+		<div class="tabs-simple__tab-content">
+
+			<div class="popup-form">
+								<div class="rtecontent">
+					<p>Sign in to the AWB Member Portal with your username and password.</p>
+
+					<a class="awb-btn" href="?portal_login"><span>Log In</span></a>
+				</div>
+			</div>
+
+		</div>
+
+				<input type="radio" id="tab-2" name="login-tabs">
+		<label for="tab-2">Not A Member Yet?</label>
+
+		<div class="tabs-simple__tab-content">
+			<div class="popup-form">
+				<p>Please contact Sean Heiner, AWB Director of Membership</p>
+				
+                <div class='gf_browser_unknown gform_wrapper gform_legacy_markup_wrapper gform-theme--no-framework' data-form-theme='legacy' data-form-index='0' id='gform_wrapper_1' ><div id='gf_1' class='gform_anchor' tabindex='-1'></div><form method='post' enctype='multipart/form-data' target='gform_ajax_frame_1' id='gform_1'  action='/wp-content/uploads/2018/05/SAMPLE-AT-WILL-EMPLOYMENT-OFFER-LETTER.pdf#gf_1' data-formid='1' novalidate>
+                        <div class='gform-body gform_body'><ul id='gform_fields_1' class='gform_fields top_label form_sublabel_below description_below validation_below'><li id="field_1_6" class="gfield gfield--type-honeypot gform_validation_container field_sublabel_below gfield--has-description field_description_below field_validation_below gfield_visibility_visible"  ><label class='gfield_label gform-field-label' for='input_1_6'>X/Twitter</label><div class='ginput_container'><input name='input_6' id='input_1_6' type='text' value='' autocomplete='new-password'/></div><div class='gfield_description' id='gfield_description_1_6'>This field is for validation purposes and should be left unchanged.</div></li><li id="field_1_1" class="gfield gfield--type-text gfield_contains_required field_sublabel_below gfield--no-description field_description_below hidden_label field_validation_below gfield_visibility_visible"  ><label class='gfield_label gform-field-label' for='input_1_1'>Name<span class="gfield_required"><span class="gfield_required gfield_required_asterisk">*</span></span></label><div class='ginput_container ginput_container_text'><input name='input_1' id='input_1_1' type='text' value='' class='medium'    placeholder='Name' aria-required="true" aria-invalid="false"   /></div></li><li id="field_1_2" class="gfield gfield--type-email gfield_contains_required field_sublabel_below gfield--no-description field_description_below hidden_label field_validation_below gfield_visibility_visible"  ><label class='gfield_label gform-field-label' for='input_1_2'>Email<span class="gfield_required"><span class="gfield_required gfield_required_asterisk">*</span></span></label><div class='ginput_container ginput_container_email'>
+                            <input name='input_2' id='input_1_2' type='email' value='' class='medium'   placeholder='Email Address' aria-required="true" aria-invalid="false"  />
+                        </div></li><li id="field_1_3" class="gfield gfield--type-phone gfield_contains_required field_sublabel_below gfield--no-description field_description_below hidden_label field_validation_below gfield_visibility_visible"  ><label class='gfield_label gform-field-label' for='input_1_3'>Phone<span class="gfield_required"><span class="gfield_required gfield_required_asterisk">*</span></span></label><div class='ginput_container ginput_container_phone'><input name='input_3' id='input_1_3' type='tel' value='' class='medium'  placeholder='Phone Number' aria-required="true" aria-invalid="false"   /></div></li><li id="field_1_4" class="gfield gfield--type-textarea field_sublabel_below gfield--no-description field_description_below hidden_label field_validation_below gfield_visibility_visible"  ><label class='gfield_label gform-field-label' for='input_1_4'>Message</label><div class='ginput_container ginput_container_textarea'><textarea name='input_4' id='input_1_4' class='textarea medium'    placeholder='Message'  aria-invalid="false"   rows='10' cols='50'></textarea></div></li><li id="field_1_5" class="gfield gfield--type-captcha field_sublabel_below gfield--no-description field_description_below hidden_label field_validation_below gfield_visibility_visible"  ><label class='gfield_label gform-field-label' for='input_1_5'>CAPTCHA</label><div id='input_1_5' class='ginput_container ginput_recaptcha' data-sitekey='6Le3accZAAAAAMMeKY-mDHZrpXxJN2JucimQuFsx'  data-theme='light' data-tabindex='-1' data-size='invisible' data-badge='bottomright'></div></li></ul></div>
+        <div class='gform-footer gform_footer top_label'> <div class='gform-btn-wrap'><input type='submit' id='gform_submit_button_1' class='gform_button button' onclick='gform.submission.handleButtonClick(this);' data-submission-type='submit' value='Submit'  /></div> <input type='hidden' name='gform_ajax' value='form_id=1&amp;title=&amp;description=&amp;tabindex=0&amp;theme=legacy&amp;styles=[]&amp;hash=ae1bcc559a4000932a1df4d0ca8b7369' />
+            <input type='hidden' class='gform_hidden' name='gform_submission_method' data-js='gform_submission_method_1' value='iframe' />
+            <input type='hidden' class='gform_hidden' name='gform_theme' data-js='gform_theme_1' id='gform_theme_1' value='legacy' />
+            <input type='hidden' class='gform_hidden' name='gform_style_settings' data-js='gform_style_settings_1' id='gform_style_settings_1' value='[]' />
+            <input type='hidden' class='gform_hidden' name='is_submit_1' value='1' />
+            <input type='hidden' class='gform_hidden' name='gform_submit' value='1' />
+            
+            <input type='hidden' class='gform_hidden' name='gform_unique_id' value='' />
+            <input type='hidden' class='gform_hidden' name='state_1' value='WyJbXSIsIjIzNDJjZDJmZTA1YTM1YmI1NjAyMDVmN2M1YWIwMmUxIl0=' />
+            <input type='hidden' autocomplete='off' class='gform_hidden' name='gform_target_page_number_1' id='gform_target_page_number_1' value='0' />
+            <input type='hidden' autocomplete='off' class='gform_hidden' name='gform_source_page_number_1' id='gform_source_page_number_1' value='1' />
+            <input type='hidden' name='gform_field_values' value='' />
+            
+        </div>
+                        <p style="display: none !important;" class="akismet-fields-container" data-prefix="ak_"><label>&#916;<textarea name="ak_hp_textarea" cols="45" rows="8" maxlength="100"></textarea></label><input type="hidden" id="ak_js_2" name="ak_js" value="15"/><script>document.getElementById( "ak_js_2" ).setAttribute( "value", ( new Date() ).getTime() );</script></p></form>
+                        </div>
+		                <iframe style='display:none;width:0px;height:0px;' src='about:blank' name='gform_ajax_frame_1' id='gform_ajax_frame_1' title='This iframe contains the logic required to handle Ajax powered Gravity Forms.'></iframe>
+		                <script type="text/javascript">
+/* <![CDATA[ */
+ gform.initializeOnLoaded( function() {gformInitSpinner( 1, 'https://www.awb.org/wp-content/themes/awb/img/animated-spinner.svg', true );jQuery('#gform_ajax_frame_1').on('load',function(){var contents = jQuery(this).contents().find('*').html();var is_postback = contents.indexOf('GF_AJAX_POSTBACK') >= 0;if(!is_postback){return;}var form_content = jQuery(this).contents().find('#gform_wrapper_1');var is_confirmation = jQuery(this).contents().find('#gform_confirmation_wrapper_1').length > 0;var is_redirect = contents.indexOf('gformRedirect(){') >= 0;var is_form = form_content.length > 0 && ! is_redirect && ! is_confirmation;var mt = parseInt(jQuery('html').css('margin-top'), 10) + parseInt(jQuery('body').css('margin-top'), 10) + 100;if(is_form){jQuery('#gform_wrapper_1').html(form_content.html());if(form_content.hasClass('gform_validation_error')){jQuery('#gform_wrapper_1').addClass('gform_validation_error');} else {jQuery('#gform_wrapper_1').removeClass('gform_validation_error');}setTimeout( function() { /* delay the scroll by 50 milliseconds to fix a bug in chrome */ jQuery(document).scrollTop(jQuery('#gform_wrapper_1').offset().top - mt); }, 50 );if(window['gformInitDatepicker']) {gformInitDatepicker();}if(window['gformInitPriceFields']) {gformInitPriceFields();}var current_page = jQuery('#gform_source_page_number_1').val();gformInitSpinner( 1, 'https://www.awb.org/wp-content/themes/awb/img/animated-spinner.svg', true );jQuery(document).trigger('gform_page_loaded', [1, current_page]);window['gf_submitting_1'] = false;}else if(!is_redirect){var confirmation_content = jQuery(this).contents().find('.GF_AJAX_POSTBACK').html();if(!confirmation_content){confirmation_content = contents;}jQuery('#gform_wrapper_1').replaceWith(confirmation_content);jQuery(document).scrollTop(jQuery('#gf_1').offset().top - mt);jQuery(document).trigger('gform_confirmation_loaded', [1]);window['gf_submitting_1'] = false;wp.a11y.speak(jQuery('#gform_confirmation_message_1').text());}else{jQuery('#gform_1').append(contents);if(window['gformRedirect']) {gformRedirect();}}jQuery(document).trigger("gform_pre_post_render", [{ formId: "1", currentPage: "current_page", abort: function() { this.preventDefault(); } }]);        if (event && event.defaultPrevented) {                return;        }        const gformWrapperDiv = document.getElementById( "gform_wrapper_1" );        if ( gformWrapperDiv ) {            const visibilitySpan = document.createElement( "span" );            visibilitySpan.id = "gform_visibility_test_1";            gformWrapperDiv.insertAdjacentElement( "afterend", visibilitySpan );        }        const visibilityTestDiv = document.getElementById( "gform_visibility_test_1" );        let postRenderFired = false;        function triggerPostRender() {            if ( postRenderFired ) {                return;            }            postRenderFired = true;            gform.core.triggerPostRenderEvents( 1, current_page );            if ( visibilityTestDiv ) {                visibilityTestDiv.parentNode.removeChild( visibilityTestDiv );            }        }        function debounce( func, wait, immediate ) {            var timeout;            return function() {                var context = this, args = arguments;                var later = function() {                    timeout = null;                    if ( !immediate ) func.apply( context, args );                };                var callNow = immediate && !timeout;                clearTimeout( timeout );                timeout = setTimeout( later, wait );                if ( callNow ) func.apply( context, args );            };        }        const debouncedTriggerPostRender = debounce( function() {            triggerPostRender();        }, 200 );        if ( visibilityTestDiv && visibilityTestDiv.offsetParent === null ) {            const observer = new MutationObserver( ( mutations ) => {                mutations.forEach( ( mutation ) => {                    if ( mutation.type === 'attributes' && visibilityTestDiv.offsetParent !== null ) {                        debouncedTriggerPostRender();                        observer.disconnect();                    }                });            });            observer.observe( document.body, {                attributes: true,                childList: false,                subtree: true,                attributeFilter: [ 'style', 'class' ],            });        } else {            triggerPostRender();        }    } );} ); 
+/* ]]> */
+</script>
+
+			</div>
+		</div>
+
+
+	</div>
+
+
+</div>
+<div id="search-popup" class="popup-window mx950 mfp-hide">
+	<a class="close-btn"><svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 18 19">
+  <title>Close</title>
+  <g fill="none" fill-rule="evenodd" stroke="#2D68C4" stroke-linecap="round" stroke-width="3" transform="translate(0 1.075)">
+    <line x1="-1.5" x2="19.5" y1="8.425" y2="8.425" transform="rotate(-45 9 8.425)"/>
+    <line x1="1.575" x2="16.425" y1="1" y2="15.849"/>
+  </g>
+</svg>
+</a>
+
+	
+	
+<h2 class="section-headline section-headline--small h3 section-headline--bug">
+Search AWB
+</h2>	<form role="search" method="get" id="searchform" class="search-form" action="/" autocomplete="off">
+	<input type="hidden" name="content_type" value="" />
+	<input type="hidden" name="filter" value="" />
+	<input class="search-form__field" type="text" value="" name="s" id="s" placeholder="Enter Search Term" autocomplete="off" />
+	<button class="awb-btn" type="submit" id="searchsubmit"  /><span>Search <svg xmlns="http://www.w3.org/2000/svg" width="15" height="10" viewBox="0 0 15 10">
+  <polygon fill="#FFF" fill-rule="evenodd" points="138 21.167 126.167 21.167 129.167 18.167 128 17 123 22 128 27 129.167 25.833 126.167 22.833 138 22.833" transform="rotate(-180 69 13.5)"/>
+</svg>
+</span></button>
+</form>
+
+
+
+</div>
+
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"\/*"},{"not":{"href_matches":["\/wp-*.php","\/wp-admin\/*","\/wp-content\/uploads\/*","\/wp-content\/*","\/wp-content\/plugins\/*","\/wp-content\/themes\/awb\/*","\/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
+</script>
+		<script>
+		( function ( body ) {
+			'use strict';
+			body.className = body.className.replace( /\btribe-no-js\b/, 'tribe-js' );
+		} )( document.body );
+		</script>
+		<script> /* <![CDATA[ */var tribe_l10n_datatables = {"aria":{"sort_ascending":": activate to sort column ascending","sort_descending":": activate to sort column descending"},"length_menu":"Show _MENU_ entries","empty_table":"No data available in table","info":"Showing _START_ to _END_ of _TOTAL_ entries","info_empty":"Showing 0 to 0 of 0 entries","info_filtered":"(filtered from _MAX_ total entries)","zero_records":"No matching records found","search":"Search:","all_selected_text":"All items on this page were selected. ","select_all_link":"Select all pages","clear_selection":"Clear Selection.","pagination":{"all":"All","next":"Next","previous":"Previous"},"select":{"rows":{"0":"","_":": Selected %d rows","1":": Selected 1 row"}},"datepicker":{"dayNames":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"dayNamesShort":["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],"dayNamesMin":["S","M","T","W","T","F","S"],"monthNames":["January","February","March","April","May","June","July","August","September","October","November","December"],"monthNamesShort":["January","February","March","April","May","June","July","August","September","October","November","December"],"monthNamesMin":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"nextText":"Next","prevText":"Prev","currentText":"Today","closeText":"Done","today":"Today","clear":"Clear"}};/* ]]> */ </script><link rel='stylesheet' id='animated-css' href='https://www.awb.org/wp-content/plugins/wpdevart-countdown-pro/includes/style/effects.css?ver=6.8.3' type='text/css' media='all' />
+<link rel='stylesheet' id='countdown_css-css' href='https://www.awb.org/wp-content/plugins/wpdevart-countdown-pro/includes/style/style.css?ver=6.8.3' type='text/css' media='all' />
+<link rel='stylesheet' id='dashicons-css' href='https://www.awb.org/wp-includes/css/dashicons.min.css?ver=6.8.3' type='text/css' media='all' />
+<link rel='stylesheet' id='thickbox-css' href='https://www.awb.org/wp-includes/js/thickbox/thickbox.css?ver=6.8.3' type='text/css' media='all' />
+<script type="text/javascript" src="https://www.awb.org/wp-content/plugins/the-events-calendar/common/build/js/user-agent.js?ver=da75d0bdea6dde3898df" id="tec-user-agent-js"></script>
+<script type="text/javascript" src="https://www.awb.org/wp-includes/js/jquery/ui/core.min.js?ver=1.13.3" id="jquery-ui-core-js"></script>
+<script type="text/javascript" src="https://www.awb.org/wp-includes/js/jquery/ui/menu.min.js?ver=1.13.3" id="jquery-ui-menu-js"></script>
+<script type="text/javascript" src="https://www.awb.org/wp-includes/js/dist/dom-ready.min.js?ver=f77871ff7694fffea381" id="wp-dom-ready-js"></script>
+<script type="text/javascript" src="https://www.awb.org/wp-includes/js/dist/hooks.min.js?ver=4d63a3d491d11ffd8ac6" id="wp-hooks-js"></script>
+<script type="text/javascript" src="https://www.awb.org/wp-includes/js/dist/i18n.min.js?ver=5e580eb46a90c2b997e6" id="wp-i18n-js"></script>
+<script type="text/javascript" id="wp-i18n-js-after">
+/* <![CDATA[ */
+wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://www.awb.org/wp-includes/js/dist/a11y.min.js?ver=3156534cc54473497e14" id="wp-a11y-js"></script>
+<script type="text/javascript" src="https://www.awb.org/wp-includes/js/jquery/ui/autocomplete.min.js?ver=1.13.3" id="jquery-ui-autocomplete-js"></script>
+<script type="text/javascript" src="https://www.awb.org/wp-content/plugins/gearlab-tools-wordpress/js/search.js?ver=v0.0.2" id="gearlab-js-js"></script>
+<script type="text/javascript" src="https://www.awb.org/wp-content/plugins/duracelltomi-google-tag-manager/dist/js/gtm4wp-form-move-tracker.js?ver=1.22.1" id="gtm4wp-form-move-tracker-js"></script>
+<script type="text/javascript" id="project-common-js-extra">
+/* <![CDATA[ */
+var wp_ajax = {"url":"https:\/\/www.awb.org\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://www.awb.org/wp-content/themes/awb/dist/common.js?ver=1743003980197" id="project-common-js"></script>
+<script type="text/javascript" src="https://www.awb.org/wp-content/plugins/wpdevart-countdown-pro/includes/javascript/front_end_js.js?ver=1.3" id="countdown-front-end-js"></script>
+<script type="text/javascript" id="thickbox-js-extra">
+/* <![CDATA[ */
+var thickboxL10n = {"next":"Next >","prev":"< Prev","image":"Image","of":"of","close":"Close","noiframes":"This feature requires inline frames. You have iframes disabled or your browser does not support them.","loadingAnimation":"https:\/\/www.awb.org\/wp-includes\/js\/thickbox\/loadingAnimation.gif"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://www.awb.org/wp-includes/js/thickbox/thickbox.js?ver=3.1-20121105" id="thickbox-js"></script>
+<script type="text/javascript" src="https://www.awb.org/wp-content/plugins/wpdevart-countdown-pro/includes/javascript/jquery.classycountdown.js?ver=6.8.3" id="canvase_countedown_main-js"></script>
+<script type="text/javascript" src="https://www.awb.org/wp-content/plugins/wpdevart-countdown-pro/includes/javascript/jquery.knob.js?ver=6.8.3" id="canvase_countedown_jquery_lib_knop-js"></script>
+<script type="text/javascript" src="https://www.awb.org/wp-content/plugins/wpdevart-countdown-pro/includes/javascript/jquery.throttle.js?ver=6.8.3" id="canvase_countedown_jquery_lib_thortle-js"></script>
+<script type="text/javascript" src="https://www.awb.org/wp-content/plugins/wpdevart-countdown-pro/includes/javascript/jquery.timeTo.min.js?ver=6.8.3" id="canvase_countedown_lexsus-js"></script>
+<script type="text/javascript" defer='defer' src="https://www.awb.org/wp-content/plugins/gravityforms/js/jquery.json.min.js?ver=2.9.21" id="gform_json-js"></script>
+<script type="text/javascript" id="gform_gravityforms-js-extra">
+/* <![CDATA[ */
+var gform_i18n = {"datepicker":{"days":{"monday":"Mo","tuesday":"Tu","wednesday":"We","thursday":"Th","friday":"Fr","saturday":"Sa","sunday":"Su"},"months":{"january":"January","february":"February","march":"March","april":"April","may":"May","june":"June","july":"July","august":"August","september":"September","october":"October","november":"November","december":"December"},"firstDay":0,"iconText":"Select date"}};
+var gf_legacy_multi = [];
+var gform_gravityforms = {"strings":{"invalid_file_extension":"This type of file is not allowed. Must be one of the following:","delete_file":"Delete this file","in_progress":"in progress","file_exceeds_limit":"File exceeds size limit","illegal_extension":"This type of file is not allowed.","max_reached":"Maximum number of files reached","unknown_error":"There was a problem while saving the file on the server","currently_uploading":"Please wait for the uploading to complete","cancel":"Cancel","cancel_upload":"Cancel this upload","cancelled":"Cancelled","error":"Error","message":"Message"},"vars":{"images_url":"https:\/\/www.awb.org\/wp-content\/plugins\/gravityforms\/images"}};
+var gf_global = {"gf_currency_config":{"name":"U.S. Dollar","symbol_left":"$","symbol_right":"","symbol_padding":"","thousand_separator":",","decimal_separator":".","decimals":2,"code":"USD"},"base_url":"https:\/\/www.awb.org\/wp-content\/plugins\/gravityforms","number_formats":[],"spinnerUrl":"https:\/\/www.awb.org\/wp-content\/plugins\/gravityforms\/images\/spinner.svg","version_hash":"465708d28279d2e88d4bc5bbb5f46f0d","strings":{"newRowAdded":"New row added.","rowRemoved":"Row removed","formSaved":"The form has been saved.  The content contains the link to return and complete the form."}};
+var gf_global = {"gf_currency_config":{"name":"U.S. Dollar","symbol_left":"$","symbol_right":"","symbol_padding":"","thousand_separator":",","decimal_separator":".","decimals":2,"code":"USD"},"base_url":"https:\/\/www.awb.org\/wp-content\/plugins\/gravityforms","number_formats":[],"spinnerUrl":"https:\/\/www.awb.org\/wp-content\/plugins\/gravityforms\/images\/spinner.svg","version_hash":"465708d28279d2e88d4bc5bbb5f46f0d","strings":{"newRowAdded":"New row added.","rowRemoved":"Row removed","formSaved":"The form has been saved.  The content contains the link to return and complete the form."}};
+/* ]]> */
+</script>
+<script type="text/javascript" defer='defer' src="https://www.awb.org/wp-content/plugins/gravityforms/js/gravityforms.min.js?ver=2.9.21" id="gform_gravityforms-js"></script>
+<script type="text/javascript" defer='defer' src="https://www.google.com/recaptcha/api.js?hl=en&amp;ver=6.8.3#038;render=explicit" id="gform_recaptcha-js"></script>
+<script type="text/javascript" defer='defer' src="https://www.awb.org/wp-content/plugins/gravityforms/js/placeholders.jquery.min.js?ver=2.9.21" id="gform_placeholder-js"></script>
+<script type="text/javascript" defer='defer' src="https://www.awb.org/wp-content/plugins/gravityforms/assets/js/dist/utils.min.js?ver=380b7a5ec0757c78876bc8a59488f2f3" id="gform_gravityforms_utils-js"></script>
+<script type="text/javascript" defer='defer' src="https://www.awb.org/wp-content/plugins/gravityforms/assets/js/dist/vendor-theme.min.js?ver=8673c9a2ff188de55f9073009ba56f5e" id="gform_gravityforms_theme_vendors-js"></script>
+<script type="text/javascript" id="gform_gravityforms_theme-js-extra">
+/* <![CDATA[ */
+var gform_theme_config = {"common":{"form":{"honeypot":{"version_hash":"465708d28279d2e88d4bc5bbb5f46f0d"},"ajax":{"ajaxurl":"https:\/\/www.awb.org\/wp-admin\/admin-ajax.php","ajax_submission_nonce":"52224876ff","i18n":{"step_announcement":"Step %1$s of %2$s, %3$s","unknown_error":"There was an unknown error processing your request. Please try again."}}}},"hmr_dev":"","public_path":"https:\/\/www.awb.org\/wp-content\/plugins\/gravityforms\/assets\/js\/dist\/","config_nonce":"d6ca02c916"};
+/* ]]> */
+</script>
+<script type="text/javascript" defer='defer' src="https://www.awb.org/wp-content/plugins/gravityforms/assets/js/dist/scripts-theme.min.js?ver=ea8a466a3fdf642558f016efd46a6aff" id="gform_gravityforms_theme-js"></script>
+<script type="text/javascript" defer='defer' src="https://www.awb.org/wp-content/plugins/gravityforms/js/jquery.maskedinput.min.js?ver=2.9.21" id="gform_masked_input-js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+ gform.initializeOnLoaded( function() { jQuery(document).on('gform_post_render', function(event, formId, currentPage){if(formId == 3) {if(typeof Placeholders != 'undefined'){
+                        Placeholders.enable();
+                    }} } );jQuery(document).on('gform_post_conditional_logic', function(event, formId, fields, isInit){} ) } ); 
+/* ]]> */
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+ gform.initializeOnLoaded( function() {jQuery(document).trigger("gform_pre_post_render", [{ formId: "3", currentPage: "1", abort: function() { this.preventDefault(); } }]);        if (event && event.defaultPrevented) {                return;        }        const gformWrapperDiv = document.getElementById( "gform_wrapper_3" );        if ( gformWrapperDiv ) {            const visibilitySpan = document.createElement( "span" );            visibilitySpan.id = "gform_visibility_test_3";            gformWrapperDiv.insertAdjacentElement( "afterend", visibilitySpan );        }        const visibilityTestDiv = document.getElementById( "gform_visibility_test_3" );        let postRenderFired = false;        function triggerPostRender() {            if ( postRenderFired ) {                return;            }            postRenderFired = true;            gform.core.triggerPostRenderEvents( 3, 1 );            if ( visibilityTestDiv ) {                visibilityTestDiv.parentNode.removeChild( visibilityTestDiv );            }        }        function debounce( func, wait, immediate ) {            var timeout;            return function() {                var context = this, args = arguments;                var later = function() {                    timeout = null;                    if ( !immediate ) func.apply( context, args );                };                var callNow = immediate && !timeout;                clearTimeout( timeout );                timeout = setTimeout( later, wait );                if ( callNow ) func.apply( context, args );            };        }        const debouncedTriggerPostRender = debounce( function() {            triggerPostRender();        }, 200 );        if ( visibilityTestDiv && visibilityTestDiv.offsetParent === null ) {            const observer = new MutationObserver( ( mutations ) => {                mutations.forEach( ( mutation ) => {                    if ( mutation.type === 'attributes' && visibilityTestDiv.offsetParent !== null ) {                        debouncedTriggerPostRender();                        observer.disconnect();                    }                });            });            observer.observe( document.body, {                attributes: true,                childList: false,                subtree: true,                attributeFilter: [ 'style', 'class' ],            });        } else {            triggerPostRender();        }    } ); 
+/* ]]> */
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+ gform.initializeOnLoaded( function() { jQuery(document).on('gform_post_render', function(event, formId, currentPage){if(formId == 1) {if(typeof Placeholders != 'undefined'){
+                        Placeholders.enable();
+                    }jQuery('#input_1_3').mask('(999) 999-9999').bind('keypress', function(e){if(e.which == 13){jQuery(this).blur();} } );} } );jQuery(document).on('gform_post_conditional_logic', function(event, formId, fields, isInit){} ) } ); 
+/* ]]> */
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+ gform.initializeOnLoaded( function() {jQuery(document).trigger("gform_pre_post_render", [{ formId: "1", currentPage: "1", abort: function() { this.preventDefault(); } }]);        if (event && event.defaultPrevented) {                return;        }        const gformWrapperDiv = document.getElementById( "gform_wrapper_1" );        if ( gformWrapperDiv ) {            const visibilitySpan = document.createElement( "span" );            visibilitySpan.id = "gform_visibility_test_1";            gformWrapperDiv.insertAdjacentElement( "afterend", visibilitySpan );        }        const visibilityTestDiv = document.getElementById( "gform_visibility_test_1" );        let postRenderFired = false;        function triggerPostRender() {            if ( postRenderFired ) {                return;            }            postRenderFired = true;            gform.core.triggerPostRenderEvents( 1, 1 );            if ( visibilityTestDiv ) {                visibilityTestDiv.parentNode.removeChild( visibilityTestDiv );            }        }        function debounce( func, wait, immediate ) {            var timeout;            return function() {                var context = this, args = arguments;                var later = function() {                    timeout = null;                    if ( !immediate ) func.apply( context, args );                };                var callNow = immediate && !timeout;                clearTimeout( timeout );                timeout = setTimeout( later, wait );                if ( callNow ) func.apply( context, args );            };        }        const debouncedTriggerPostRender = debounce( function() {            triggerPostRender();        }, 200 );        if ( visibilityTestDiv && visibilityTestDiv.offsetParent === null ) {            const observer = new MutationObserver( ( mutations ) => {                mutations.forEach( ( mutation ) => {                    if ( mutation.type === 'attributes' && visibilityTestDiv.offsetParent !== null ) {                        debouncedTriggerPostRender();                        observer.disconnect();                    }                });            });            observer.observe( document.body, {                attributes: true,                childList: false,                subtree: true,                attributeFilter: [ 'style', 'class' ],            });        } else {            triggerPostRender();        }    } ); 
+/* ]]> */
+</script>
+
+
+
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"NRJS-ca47a89610dec962a1b","applicationID":"502703300","transactionName":"MgYBZhRYWkZTUEFbCQtMIlESUFtbHQcFBg==","queueTime":0,"applicationTime":740,"atts":"HkECEFxCSUg=","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
+</html>

@@ -18,13 +18,20 @@ export default defineConfig({
 		rollupOptions: {
 			output: {
 				manualChunks(id) {
-					if (id.includes('pdfjs-dist') || id.includes('pdf-lib')) {
+					// Separate PDF libraries for better caching and lazy loading
+					if (id.includes('pdfjs-dist')) {
 						return 'pdfjs';
+					}
+					if (id.includes('pdf-lib')) {
+						return 'pdf-lib';
 					}
 				}
 			}
 		},
-		chunkSizeWarningLimit: 1000
+		chunkSizeWarningLimit: 1000,
+		// Optimize for smaller bundles
+		minify: 'esbuild',
+		target: 'es2020'
 	},
 	css: {
 		transformer: 'lightningcss',
