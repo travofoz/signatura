@@ -2,6 +2,8 @@
 	import { PDFDocument } from 'pdf-lib';
 	import { onMount } from 'svelte';
 	import * as pdfjsLib from 'pdfjs-dist';
+	import { PDFFormService, type FormField } from '$lib/pdf-form-service';
+	import FormFieldComponent from '$lib/components/FormField.svelte';
 
 	let pdfFile: File | null = $state(null);
 	let pdfPages: string[] = $state([]);
@@ -11,6 +13,13 @@
 	let isDrawing = $state(false);
 	let canvas: HTMLCanvasElement;
 	let ctx: CanvasRenderingContext2D | null = null;
+
+	// Form handling
+	let formService = $state(new PDFFormService());
+	let formFields = $state<FormField[]>([]);
+	let formData = $state<Record<string, any>>({});
+	let showFormPanel = $state(false);
+	let formErrors = $state<Record<string, string>>({});
 
 	// Signature placement state (stored as percentages for responsive positioning)
 	let signatures: Array<{
@@ -132,9 +141,113 @@
 
 			pdfPages = pages;
 			currentPage = 0;
+
+			// Detect form fields
+			await detectFormFields(arrayBuffer);
 		} catch (error) {
 			console.error('Failed to load PDF:', error);
 			alert('Failed to load PDF. Please check the file and try again.');
+		}
+	}
+
+	/**
+	 * Detect form fields in the PDF
+	 */
+	async function detectFormFields(arrayBuffer: ArrayBuffer) {
+		try {
+			await formService.loadDocument(arrayBuffer);
+			const fields = formService.detectFormFields();
+			
+			if (fields.length > 0) {
+				formFields = fields;
+				formData = fields.reduce((acc, field) => {
+					acc[field.name] = field.value;
+					return acc;
+				}, {} as Record<string, any>);
+				showFormPanel = true;
+			} else {
+				formFields = [];
+				formData = {};
+				showFormPanel = false;
+			}
+		} catch (error) {
+			console.warn('Failed to detect form fields:', error);
+			formFields = [];
+			formData = {};
+			showFormPanel = false;
+		}
+	}
+
+	/**
+	 * Handle form field value changes
+	 */
+	function handleFieldValueChange(fieldName: string, value: any) {
+		formData[fieldName] = value;
+		
+		// Clear any existing error for this field
+		if (formErrors[fieldName]) {
+			delete formErrors[fieldName];
+			formErrors = formErrors;
+		}
+	}
+
+	/**
+	 * Validate all form fields
+	 */
+	function validateForm(): boolean {
+		const errors: Record<string, string> = {};
+		let isValid = true;
+
+		formFields.forEach(field => {
+			const result = formService.validateField(field, formData[field.name]);
+			if (!result.valid) {
+				errors[field.name] = result.error || 'Invalid value';
+				isValid = false;
+			}
+		});
+
+		formErrors = errors;
+		return isValid;
+	}
+
+	/**
+	 * Check if field has bounds on current page
+	 */
+	function hasFieldOnPage(field: FormField, pageNum: number): boolean {
+		if (!field.bounds) return false;
+		
+		// For now, assume all fields are on page 0
+		// In a real implementation, you'd need to determine which page each field belongs to
+		return pageNum === 0;
+	}
+
+	/**
+	 * Get field bounds for current page
+	 */
+	function getFieldBoundsForPage(field: FormField, pageNum: number): {xPercent: number, yPercent: number, widthPercent: number, heightPercent: number} | null {
+		if (!field.bounds || !hasFieldOnPage(field, pageNum)) return null;
+		
+		// Convert PDF coordinates to percentages
+		// This is a simplified approach - you'd need actual page dimensions for accurate conversion
+		const pdfWidth = 612; // Standard PDF width (8.5 inches * 72 points)
+		const pdfHeight = 792; // Standard PDF height (11 inches * 72 points)
+		
+		return {
+			xPercent: (field.bounds.x / pdfWidth) * 100,
+			yPercent: (field.bounds.y / pdfHeight) * 100,
+			widthPercent: (field.bounds.width / pdfWidth) * 100,
+			heightPercent: (field.bounds.height / pdfHeight) * 100
+		};
+	}
+
+	/**
+	 * Focus on a specific form field
+	 */
+	function focusFormField(fieldName: string) {
+		const element = document.querySelector(`[data-field-name="${fieldName}"]`) as HTMLElement;
+		if (element) {
+			element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+			element.focus();
 		}
 	}
 
@@ -348,8 +461,27 @@
 	async function downloadSignedPDF() {
 		if (!pdfFile) return;
 
+		// Validate form if there are form fields
+		if (formFields.length > 0 && !validateForm()) {
+			alert('Please fix the form errors before downloading.');
+			return;
+		}
+
 		const arrayBuffer = await pdfFile.arrayBuffer();
-		const pdfDoc = await PDFDocument.load(arrayBuffer);
+		
+		// Load document with form service to handle form data
+		await formService.loadDocument(arrayBuffer);
+		
+		// Fill form data if any fields exist
+		if (formFields.length > 0) {
+			await formService.fillForm(formData);
+		}
+
+		// Get the modified PDF with form data
+		let pdfBytes = await formService.saveDocument();
+		
+		// Load the modified PDF to add signatures
+		const pdfDoc = await PDFDocument.load(pdfBytes);
 		const pages = pdfDoc.getPages();
 
 		for (const sig of signatures) {
@@ -376,12 +508,12 @@
 			});
 		}
 
-		const pdfBytes = await pdfDoc.save();
+		pdfBytes = await pdfDoc.save();
 		const blob = new Blob([new Uint8Array(pdfBytes)], { type: 'application/pdf' });
 		const url = URL.createObjectURL(blob);
 		const a = document.createElement('a');
 		a.href = url;
-		a.download = 'signed-' + (pdfFile?.name || 'document.pdf');
+		a.download = 'completed-' + (pdfFile?.name || 'document.pdf');
 		a.click();
 		URL.revokeObjectURL(url);
 	}
@@ -422,9 +554,9 @@
 			</div>
 		{:else}
 			<!-- Main Editor -->
-			<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+			<div class="grid grid-cols-1 {showFormPanel ? 'lg:grid-cols-4' : 'lg:grid-cols-3'} gap-6">
 				<!-- PDF Preview -->
-				<div class="lg:col-span-2">
+				<div class="{showFormPanel ? 'lg:col-span-2' : 'lg:col-span-2'}">
 					<div class="card bg-base-100 shadow-xl">
 						<div class="card-body">
 							<h2 class="card-title">Document Preview</h2>
@@ -465,6 +597,36 @@
 											></div>
 										</div>
 									{/each}
+
+									<!-- Form Field Overlays -->
+									{#each formFields.filter(field => hasFieldOnPage(field, currentPage)) as field}
+										{@const bounds = getFieldBoundsForPage(field, currentPage)}
+										{#if bounds}
+											{@const x = percentToPixels(bounds.xPercent, containerWidth)}
+											{@const y = percentToPixels(bounds.yPercent, containerHeight)}
+											{@const width = percentToPixels(bounds.widthPercent, containerWidth)}
+											{@const height = percentToPixels(bounds.heightPercent, containerHeight)}
+											<div
+												class="absolute border-2 border-info bg-info/10 cursor-pointer hover:bg-info/20 transition-colors"
+												style="left: {x}px; top: {y}px; width: {width}px; height: {height}px;"
+												onclick={() => focusFormField(field.name)}
+												onkeydown={(e) => {
+													if (e.key === 'Enter' || e.key === ' ') {
+														e.preventDefault();
+														focusFormField(field.name);
+													}
+												}}
+												role="button"
+												tabindex="0"
+												aria-label={`Form field: ${field.name}`}
+												title={`${field.name} (${field.type})${field.required ? ' - Required' : ''}`}
+											>
+												<div class="absolute -top-6 left-0 bg-info text-info-content text-xs px-2 py-1 rounded opacity-0 hover:opacity-100 transition-opacity whitespace-nowrap">
+													{field.name}
+												</div>
+											</div>
+										{/if}
+									{/each}
 								</div>
 
 								<!-- Page Navigation -->
@@ -501,6 +663,53 @@
 						</div>
 					</div>
 				</div>
+
+				<!-- Form Panel -->
+				{#if showFormPanel}
+					<div class="card bg-base-100 shadow-xl">
+						<div class="card-body">
+							<h2 class="card-title">Form Fields</h2>
+							
+							{#if formFields.length > 0}
+								<div class="max-h-96 overflow-y-auto space-y-2">
+									{#each formFields as field}
+										<div class="form-field-container">
+											<FormFieldComponent 
+												field={field} 
+												value={formData[field.name]}
+												onValueChange={handleFieldValueChange}
+											/>
+											{#if formErrors[field.name]}
+												<div class="text-error text-sm mt-1">
+													{formErrors[field.name]}
+												</div>
+											{/if}
+										</div>
+									{/each}
+								</div>
+								
+								<div class="card-actions mt-4">
+									<button 
+										class="btn btn-outline btn-sm"
+										onclick={() => {
+											formData = formFields.reduce((acc, field) => {
+												acc[field.name] = field.value;
+												return acc;
+											}, {} as Record<string, any>);
+											formErrors = {};
+										}}
+									>
+										Reset Form
+									</button>
+								</div>
+							{:else}
+								<div class="text-center py-8 opacity-60">
+									No form fields detected in this PDF
+								</div>
+							{/if}
+						</div>
+					</div>
+				{/if}
 
 				<!-- Signature Panel -->
 				<div class="space-y-4">
@@ -597,13 +806,13 @@
 							<div class="card-actions flex-col">
 								<button
 									class="btn btn-success btn-block"
-									disabled={signatures.length === 0}
+									disabled={signatures.length === 0 && formFields.length === 0}
 									onclick={downloadSignedPDF}
 								>
 									<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
 									</svg>
-									Download Signed PDF
+									{signatures.length > 0 ? 'Download Signed PDF' : 'Download Completed PDF'}
 								</button>
 								<button
 									class="btn btn-outline btn-block"
@@ -612,6 +821,10 @@
 										pdfPages = [];
 										signatures = [];
 										signatureImage = null;
+										formFields = [];
+										formData = {};
+										formErrors = {};
+										showFormPanel = false;
 									}}
 								>
 									<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
