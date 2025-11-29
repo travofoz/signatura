@@ -1,10 +1,11 @@
 <script lang="ts">
 	import type { FormField } from '$lib/pdf-form-service';
 
-	let { field, value, onValueChange } = $props<{
+	let { field, value, onValueChange, onSignatureRequest } = $props<{
 		field: FormField;
 		value: any;
 		onValueChange: (fieldName: string, value: any) => void;
+		onSignatureRequest?: (fieldName: string) => void;
 	}>();
 
 	function handleChange(newValue: any) {
@@ -12,11 +13,9 @@
 	}
 
 	function requestSignature(fieldName: string) {
-		// This will be handled by the parent component
-		const event = new CustomEvent('requestSignature', { 
-			detail: { fieldName } 
-		});
-		dispatchEvent(event);
+		if (onSignatureRequest) {
+			onSignatureRequest(fieldName);
+		}
 	}
 
 	function handleCheckboxChange(event: Event) {

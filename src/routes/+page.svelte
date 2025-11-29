@@ -21,6 +21,23 @@
 	let showFormPanel = $state(false);
 	let formErrors = $state<Record<string, string>>({});
 
+	// Store page dimensions for accurate coordinate conversion
+	let pageDimensions = $state<Array<{width: number, height: number}>>([]);
+
+	// Handle signature field requests
+	function handleSignatureRequest(fieldName: string) {
+		// Focus signature panel and scroll to signature area
+		const signaturePanel = document.querySelector('[data-signature-panel]') as HTMLElement;
+		if (signaturePanel) {
+			signaturePanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+			// Highlight signature area briefly
+			signaturePanel.classList.add('ring-2', 'ring-primary', 'ring-offset-2');
+			setTimeout(() => {
+				signaturePanel.classList.remove('ring-2', 'ring-primary', 'ring-offset-2');
+			}, 2000);
+		}
+	}
+
 	// Signature placement state (stored as percentages for responsive positioning)
 	let signatures: Array<{
 		image: string;
@@ -126,9 +143,17 @@
 			const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
 
 			const pages: string[] = [];
+			const dimensions: {width: number, height: number}[] = [];
+			
 			for (let i = 1; i <= pdf.numPages; i++) {
 				const page = await pdf.getPage(i);
 				const viewport = page.getViewport({ scale: 1.5 });
+
+				// Store actual page dimensions for coordinate conversion
+				dimensions.push({
+					width: viewport.width,
+					height: viewport.height
+				});
 
 				const tempCanvas = document.createElement('canvas');
 				const context = tempCanvas.getContext('2d')!;
@@ -140,6 +165,7 @@
 			}
 
 			pdfPages = pages;
+			pageDimensions = dimensions;
 			currentPage = 0;
 
 			// Detect form fields
@@ -217,7 +243,7 @@
 		if (!field.bounds) return false;
 		
 		// For now, assume all fields are on page 0
-		// In a real implementation, you'd need to determine which page each field belongs to
+		// TODO: Implement proper page detection using pdf-lib field page info
 		return pageNum === 0;
 	}
 
@@ -227,16 +253,15 @@
 	function getFieldBoundsForPage(field: FormField, pageNum: number): {xPercent: number, yPercent: number, widthPercent: number, heightPercent: number} | null {
 		if (!field.bounds || !hasFieldOnPage(field, pageNum)) return null;
 		
-		// Convert PDF coordinates to percentages
-		// This is a simplified approach - you'd need actual page dimensions for accurate conversion
-		const pdfWidth = 612; // Standard PDF width (8.5 inches * 72 points)
-		const pdfHeight = 792; // Standard PDF height (11 inches * 72 points)
+		// Use actual page dimensions for accurate coordinate conversion
+		const pageDim = pageDimensions[pageNum];
+		if (!pageDim) return null;
 		
 		return {
-			xPercent: (field.bounds.x / pdfWidth) * 100,
-			yPercent: (field.bounds.y / pdfHeight) * 100,
-			widthPercent: (field.bounds.width / pdfWidth) * 100,
-			heightPercent: (field.bounds.height / pdfHeight) * 100
+			xPercent: (field.bounds.x / pageDim.width) * 100,
+			yPercent: (field.bounds.y / pageDim.height) * 100,
+			widthPercent: (field.bounds.width / pageDim.width) * 100,
+			heightPercent: (field.bounds.height / pageDim.height) * 100
 		};
 	}
 
@@ -246,8 +271,24 @@
 	function focusFormField(fieldName: string) {
 		const element = document.querySelector(`[data-field-name="${fieldName}"]`) as HTMLElement;
 		if (element) {
-			element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-			element.focus();
+			// Scroll to the form panel first
+			const formPanel = document.querySelector('[data-form-panel]') as HTMLElement;
+			if (formPanel) {
+				formPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			}
+			
+			// Then focus the actual input element
+			setTimeout(() => {
+				if (element.tagName === 'INPUT' || element.tagName === 'SELECT') {
+					element.focus();
+				} else {
+					// If it's a container, find the first focusable element inside
+					const focusableElement = element.querySelector('input, select, button') as HTMLElement;
+					if (focusableElement) {
+						focusableElement.focus();
+					}
+				}
+			}, 300);
 		}
 	}
 
@@ -666,7 +707,7 @@
 
 				<!-- Form Panel -->
 				{#if showFormPanel}
-					<div class="card bg-base-100 shadow-xl">
+					<div class="card bg-base-100 shadow-xl" data-form-panel>
 						<div class="card-body">
 							<h2 class="card-title">Form Fields</h2>
 							
@@ -678,6 +719,7 @@
 												field={field} 
 												value={formData[field.name]}
 												onValueChange={handleFieldValueChange}
+												onSignatureRequest={handleSignatureRequest}
 											/>
 											{#if formErrors[field.name]}
 												<div class="text-error text-sm mt-1">
@@ -713,7 +755,7 @@
 
 				<!-- Signature Panel -->
 				<div class="space-y-4">
-					<div class="card bg-base-100 shadow-xl">
+					<div class="card bg-base-100 shadow-xl" data-signature-panel>
 						<div class="card-body">
 							<h2 class="card-title">Signature</h2>
 
