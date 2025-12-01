@@ -4,6 +4,8 @@ import { PDFLoader } from "$lib/pdf-loader";
 import { SignatureManager, type Signature } from "$lib/signature-manager";
 import { DragDropManager } from "$lib/drag-drop-manager";
 import { FormFieldManager } from "$lib/form-field-manager";
+import { InlineFormManager } from "$lib/inline-form-manager";
+import type { PageDimensions } from "$lib/coordinate-converter";
 import pdfWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 
 export class PdfEditorState {
@@ -17,6 +19,7 @@ export class PdfEditorState {
   signatureManager: SignatureManager | null = $state(null);
   dragDropManager: DragDropManager = $state() as DragDropManager;
   formFieldManager: FormFieldManager = $state() as FormFieldManager;
+  inlineFormManager: InlineFormManager = $state() as InlineFormManager;
 
   // Core reactive state
   pdfFile: File | null = $state(null);
@@ -40,6 +43,10 @@ export class PdfEditorState {
   formFields = $state<any[]>([]);
   formData = $state<Record<string, any>>({});
   showFormPanel = $state(false);
+
+  // PDF page dimensions for coordinate conversion
+  pdfPageDimensions: PageDimensions[] = $state([]);
+  pageDimensions: PageDimensions[] = $state([]);
   
 
   // Version info
@@ -72,7 +79,7 @@ export class PdfEditorState {
 
   /**
    * Initialize managers when PDF libraries are loaded
-   * Creates instances of PDF loader, drag-drop manager, and form field manager
+   * Creates instances of PDF loader, drag-drop manager, form field manager, and inline form manager
    */
   private initializeManagers(): void {
     if (!this.pdfjsLib) return;
@@ -80,6 +87,7 @@ export class PdfEditorState {
     this.pdfLoader = new PDFLoader(this.pdfjsLib);
     this.dragDropManager = new DragDropManager(null);
     this.formFieldManager = new FormFieldManager();
+    this.inlineFormManager = new InlineFormManager();
   }
 
   /**
@@ -148,6 +156,8 @@ export class PdfEditorState {
       // Update state
       this.pdfFile = file;
       this.pdfPages = loadedPDF.pages;
+      this.pageDimensions = loadedPDF.dimensions;
+      this.pdfPageDimensions = loadedPDF.pdfPageDimensions;
       this.currentPage = 0;
 
       // Detect form fields using the loaded pdf-lib document
@@ -158,6 +168,29 @@ export class PdfEditorState {
       this.formFields = formState.formFields;
       this.formData = formState.formData;
       this.showFormPanel = formState.showFormPanel;
+
+      // Set up inline form fields with coordinates
+      if (this.formFields.length > 0) {
+        const pageDimensionsMap = new Map<number, PageDimensions>();
+        const pdfPageDimensionsMap = new Map<number, PageDimensions>();
+
+        // Create maps for coordinate conversion
+        this.pageDimensions.forEach((dim, index) => {
+          pageDimensionsMap.set(index, dim);
+        });
+
+        this.pdfPageDimensions.forEach((dim, index) => {
+          pdfPageDimensionsMap.set(index, dim);
+        });
+
+        // Initialize inline form manager
+        this.inlineFormManager.setFormFields(
+          this.formFields,
+          pageDimensionsMap,
+          pdfPageDimensionsMap,
+          1.5 // display scale
+        );
+      }
     } catch (error) {
       console.error("Failed to load PDF:", error);
       const errorMessage =
@@ -223,6 +256,44 @@ export class PdfEditorState {
    */
   handleSignatureRequest() {
     this.formFieldManager.handleSignatureRequest();
+  }
+
+  /**
+   * Handle page change for inline form fields
+   */
+  setCurrentPage(pageIndex: number): void {
+    this.currentPage = pageIndex;
+    this.inlineFormManager.setCurrentPage(pageIndex);
+  }
+
+  /**
+   * Get visible inline form fields for current page
+   */
+  getVisibleInlineFields() {
+    return this.inlineFormManager.getVisibleFields();
+  }
+
+  /**
+   * Handle inline form field focus
+   */
+  handleInlineFieldFocus(fieldName: string): void {
+    console.log('Field focused:', fieldName);
+    // Can be used for highlighting field in side panel
+  }
+
+  /**
+   * Handle inline form field blur
+   */
+  handleInlineFieldBlur(fieldName: string): void {
+    console.log('Field blurred:', fieldName);
+  }
+
+  /**
+   * Handle signature request from inline field
+   */
+  handleInlineSignatureRequest(fieldName: string): void {
+    this.focusSignaturePanel();
+    console.log('Signature requested for field:', fieldName);
   }
 
   // Signature drawing functions
@@ -378,9 +449,12 @@ export class PdfEditorState {
   reset() {
     this.pdfFile = null;
     this.pdfPages = [];
+    this.pageDimensions = [];
+    this.pdfPageDimensions = [];
     this.signatures = [];
     this.currentPage = 0;
     this.formFieldManager.resetForm();
+    this.inlineFormManager.clear();
     const formState = this.formFieldManager.getFormState();
     this.formFields = formState.formFields;
     this.formData = formState.formData;

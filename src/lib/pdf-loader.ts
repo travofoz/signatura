@@ -9,6 +9,7 @@ export interface LoadedPDF {
   pdfDoc: PDFDocument;
   pages: string[];
   dimensions: Array<{ width: number; height: number }>;
+  pdfPageDimensions: Array<{ width: number; height: number }>;
 }
 
 export class PDFLoader {
@@ -41,12 +42,20 @@ export class PDFLoader {
 
       const pages: string[] = [];
       const dimensions: Array<{ width: number; height: number }> = [];
+      const pdfPageDimensions: Array<{ width: number; height: number }> = [];
 
       for (let i = 1; i <= pdf.numPages; i++) {
         const page = await pdf.getPage(i);
-        const viewport = page.getViewport({ scale: 1.5 });
 
-        // Store actual page dimensions for coordinate conversion
+        // Get original PDF page dimensions (scale 1.0)
+        const originalViewport = page.getViewport({ scale: 1.0 });
+        pdfPageDimensions.push({
+          width: originalViewport.width,
+          height: originalViewport.height
+        });
+
+        // Get rendered dimensions (scale 1.5)
+        const viewport = page.getViewport({ scale: 1.5 });
         dimensions.push({
           width: viewport.width,
           height: viewport.height
@@ -64,7 +73,8 @@ export class PDFLoader {
       return {
         pdfDoc,
         pages,
-        dimensions
+        dimensions,
+        pdfPageDimensions
       };
     } catch (error) {
       console.error('Failed to load PDF:', error);

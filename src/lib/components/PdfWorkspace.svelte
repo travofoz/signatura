@@ -1,9 +1,10 @@
 <script lang="ts">
   import type { PdfEditorState } from '$lib/state/pdf-editor.svelte';
+  import InlineFormFields from './InlineFormFields.svelte';
 
   /**
    * PDF workspace component
-   * Displays PDF preview with draggable signature overlays
+   * Displays PDF preview with draggable signature overlays and inline form fields
    */
   let { editor } = $props<{
     /** Main PDF editor state instance */
@@ -11,11 +12,17 @@
   }>();
 
   /**
+   * PDF container element reference
+   */
+  let pdfContainerElement: HTMLDivElement | undefined = $state();
+
+  /**
    * Initialize PDF preview container
    * Sets up resize observer and container for PDF display
    * @param element - Container element for PDF preview
    */
   function initPdfContainer(element: HTMLDivElement): void {
+    pdfContainerElement = element;
     editor.initPdfContainer(element);
   }
 
@@ -80,7 +87,7 @@
           <button
             class="btn"
             disabled={editor.currentPage === 0}
-            onclick={() => editor.currentPage--}
+            onclick={() => editor.setCurrentPage(editor.currentPage - 1)}
           >
             Previous
           </button>
@@ -90,7 +97,7 @@
           <button
             class="btn"
             disabled={editor.currentPage === editor.pdfPages.length - 1}
-            onclick={() => editor.currentPage++}
+            onclick={() => editor.setCurrentPage(editor.currentPage + 1)}
           >
             Next
           </button>
@@ -107,10 +114,23 @@
           class="w-full h-auto"
         />
 
+        <!-- Inline Form Fields Overlay -->
+        {#if editor.formFields.length > 0}
+          <InlineFormFields
+            fields={editor.getVisibleInlineFields()}
+            formData={editor.formData}
+            containerElement={pdfContainerElement}
+            onFieldChange={(fieldName, value) => editor.handleFieldValueChange(fieldName, value)}
+            onFieldFocus={(fieldName) => editor.handleInlineFieldFocus(fieldName)}
+            onFieldBlur={(fieldName) => editor.handleInlineFieldBlur(fieldName)}
+            onSignatureRequest={(fieldName) => editor.handleInlineSignatureRequest(fieldName)}
+          />
+        {/if}
+
         <!-- Rendered Signatures -->
         {#each editor.currentSignatures as sig, index (index)}
           {@const dimensions = editor.dragDropManager.getContainerDimensions()}
-          <!-- 
+          <!--
             Main Signature Element:
             Interactive, so role="button" with keyboard support.
           -->
@@ -144,7 +164,7 @@
             />
 
             <!-- Resize Handle -->
-            <!-- 
+            <!--
               FIX: Changed from <div> to <button> to satisfy a11y rules.
               Removed 'role' because <button> implies semantics.
               Added type="button" to prevent form submission.
